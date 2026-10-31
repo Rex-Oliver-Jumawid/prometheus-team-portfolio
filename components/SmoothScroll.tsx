@@ -38,21 +38,30 @@ export default function SmoothScroll() {
       frame = requestAnimationFrame(animate);
     }
 
-    function scrollImmediately(event: Event) {
-      const top = (event as CustomEvent<number>).detail;
+    function scrollToRequestedPosition(event: Event) {
+      const detail = (event as CustomEvent<number | { top: number; behavior: "smooth" }>).detail;
+      const top = typeof detail === "number" ? detail : detail?.top;
       if (!Number.isFinite(top)) return;
       event.preventDefault();
-      // A reveal skip must also cancel an in-flight smooth anchor navigation.
-      if (lenis) lenis.scrollTo(top, { immediate: true, force: true });
-      else window.scrollTo({ top, behavior: "instant" });
+      const smooth = typeof detail !== "number" && detail.behavior === "smooth" && !reducedMotion.matches;
+      if (lenis && smooth) {
+        const distance = Math.abs(top - window.scrollY);
+        lenis.scrollTo(top, {
+          duration: Math.min(2.2, Math.max(.7, distance / window.innerHeight * .16)),
+          easing: t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2,
+        });
+      } else if (lenis) {
+        // Focus-driven reveals must also cancel an in-flight smooth navigation.
+        lenis.scrollTo(top, { immediate: true, force: true });
+      } else window.scrollTo({ top, behavior: smooth ? "smooth" : "instant" });
     }
 
     configure();
-    window.addEventListener("prometheus:scroll-to", scrollImmediately);
+    window.addEventListener("prometheus:scroll-to", scrollToRequestedPosition);
     reducedMotion.addEventListener("change", configure);
     return () => {
       reducedMotion.removeEventListener("change", configure);
-      window.removeEventListener("prometheus:scroll-to", scrollImmediately);
+      window.removeEventListener("prometheus:scroll-to", scrollToRequestedPosition);
       stop();
     };
   }, []);

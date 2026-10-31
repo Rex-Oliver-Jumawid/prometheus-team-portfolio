@@ -73,8 +73,8 @@ export default function PrometheusNavigation() {
     // cannot tell Lenis where the footer actually starts in document flow.
     event.stopPropagation();
     const top = window.scrollY + main.getBoundingClientRect().bottom;
-    const request = new window.CustomEvent("prometheus:scroll-to", { detail: top, cancelable: true });
-    if (window.dispatchEvent(request)) window.scrollTo({ top, behavior: "instant" });
+    const request = new window.CustomEvent("prometheus:scroll-to", { detail: { top, behavior: "smooth" }, cancelable: true });
+    if (window.dispatchEvent(request)) window.scrollTo({ top, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   };
 
   return (
