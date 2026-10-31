@@ -711,17 +711,17 @@
 }
 
 
-/* Flowchef-style entrance: clipped letter rise, followed by supporting content. */
+/* Keep the page readable from first paint while the brief entrance settles. */
 .hero-reveal-word { display: inline-block; overflow: clip; vertical-align: bottom; padding-bottom: .15em; margin-bottom: -.15em; }
 .hero-reveal-letter { display: inline-block; animation: prometheus-letter-enter 500ms cubic-bezier(.25,.46,.45,.94) var(--letter-delay) both; }
-@keyframes prometheus-letter-enter { from { transform: translateY(100%); } to { transform: translateY(0); } }
-@keyframes prometheus-content-enter { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes prometheus-header-enter { from { opacity: 0; transform: translateY(-110%); } to { opacity: 1; transform: translateY(0); } }
-.prometheus-nav-inner { animation: prometheus-header-enter 500ms cubic-bezier(.25,.46,.45,.94) 1500ms both; }
-.prometheus-preview .home-hero-subtitle-wrapper { animation: prometheus-content-enter 700ms cubic-bezier(.22,1,.36,1) 450ms both; }
-.prometheus-preview .home-hero_mid-content { animation: prometheus-content-enter 500ms cubic-bezier(.25,.46,.45,.94) 1500ms both; }
-.prometheus-preview .home-hero_btn-wrapper { animation: prometheus-content-enter 500ms cubic-bezier(.25,.46,.45,.94) 1500ms both; }
-.prometheus-preview .home-hero-title-decor-play { animation: prometheus-content-enter 800ms cubic-bezier(.22,1,.36,1) 1100ms both; }
+@keyframes prometheus-letter-enter { from { transform: translateY(.3em); } to { transform: translateY(0); } }
+@keyframes prometheus-content-enter { from { opacity: .65; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes prometheus-header-enter { from { opacity: 1; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.prometheus-nav-inner { animation: prometheus-header-enter 350ms cubic-bezier(.25,.46,.45,.94) 0ms both; }
+.prometheus-preview .home-hero-subtitle-wrapper { animation: prometheus-content-enter 350ms cubic-bezier(.22,1,.36,1) 0ms both; }
+.prometheus-preview .home-hero_mid-content { animation: prometheus-content-enter 350ms cubic-bezier(.25,.46,.45,.94) 0ms both; }
+.prometheus-preview .home-hero_btn-wrapper { animation: prometheus-content-enter 350ms cubic-bezier(.25,.46,.45,.94) 0ms both; }
+.prometheus-preview .home-hero-title-decor-play { animation: prometheus-content-enter 350ms cubic-bezier(.22,1,.36,1) 100ms both; }
 @media (prefers-reduced-motion: reduce) {
   .hero-reveal-letter, .prometheus-nav-inner,
   .prometheus-preview .home-hero-subtitle-wrapper,
@@ -730,9 +730,9 @@
   .prometheus-preview .home-hero-title-decor-play { animation: none; }
 }
 
-/* Keep the glass surface hidden until its own lettering starts to arrive. */
+/* Glass pills settle alongside their lettering without disappearing on load. */
 .prometheus-headline-pill { animation: prometheus-pill-enter 500ms cubic-bezier(.25,.46,.45,.94) var(--pill-delay) both; }
-@keyframes prometheus-pill-enter { from { opacity: 0; } to { opacity: 1; } }
+@keyframes prometheus-pill-enter { from { opacity: .65; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) {
   .prometheus-headline-pill { animation: none; }
 }
