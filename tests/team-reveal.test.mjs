@@ -19,6 +19,7 @@ test("team reveal follows scroll in both directions without a skip button and re
   let nextFrame = 0;
   let resize;
   let top = 0;
+  let coverHeight = 0;
   const media = { matches: false, addEventListener: (_, fn) => listeners.add(fn), removeEventListener: (_, fn) => listeners.delete(fn) };
   install("window", dom.window);
   install("document", dom.window.document);
@@ -33,7 +34,7 @@ test("team reveal follows scroll in both directions without a skip button and re
   dom.window.matchMedia = () => media;
   Object.defineProperty(dom.window, "innerHeight", { value: 800 });
   Object.defineProperty(dom.window, "scrollY", { get: () => 2000 - top });
-  dom.window.HTMLElement.prototype.getBoundingClientRect = () => ({ top });
+  dom.window.HTMLElement.prototype.getBoundingClientRect = function () { return { top, height: this.classList.contains("team-cover-face") ? coverHeight : 0 }; };
   Object.defineProperty(dom.window.HTMLElement.prototype, "offsetHeight", { get: () => 1200 });
   let scrollTarget;
   dom.window.scrollTo = options => { scrollTarget = options; top = 2000 - options.top; };
@@ -55,6 +56,14 @@ test("team reveal follows scroll in both directions without a skip button and re
     top = -800;
     window.dispatchEvent(new window.Event("scroll")); flush();
     assert.equal(section.dataset.revealed, "true");
+    coverHeight = 480;
+    top = -240;
+    window.dispatchEvent(new window.Event("resize")); flush();
+    assert.equal(section.style.getPropertyValue("--team-distance"), "480px");
+    assert.ok(Number(section.style.getPropertyValue("--team-open")) > .5);
+    top = -480;
+    window.dispatchEvent(new window.Event("scroll")); flush();
+    assert.equal(section.dataset.revealed, "true", "compact phone cover finishes within its own height");
     top = 100;
     window.dispatchEvent(new window.Event("scroll")); flush();
     assert.equal(section.dataset.revealed, "false");
