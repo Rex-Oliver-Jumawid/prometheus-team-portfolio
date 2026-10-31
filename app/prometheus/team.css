@@ -47,11 +47,11 @@
   .team-grid { gap: 2.4rem; margin-top: 8rem; }
 }
 @media (max-width: 767px) {
-  /* Keep the team visible without a full-screen cover or extra scroll distance on phones. */
-  .prometheus-team[data-animated="true"] { height: auto; }
-  [data-animated="true"] > .team-sticky { position: relative; min-height: 0; }
-  [data-animated="true"] .team-cover { display: none; }
-  .team-content { min-height: 0; }
+  /* Keep the split reveal, with a compact cover and normal-flow content after it opens. */
+  .team-sticky, .team-content { min-height: 0; }
+  [data-animated="true"] .team-cover { height: 100%; }
+  .team-cover-face { height: min(60svh, 480px); }
+  .team-cover-face > span { font-size: clamp(72px, 24vw, 140px); letter-spacing: -.04em; padding-right: .04em; }
   .team-content { width: calc(100% - 4rem); padding: 10rem 0 4rem; }
   .team-intro { grid-template-columns: 1fr; gap: 2.8rem; }
   .team-intro h2 { font-size: clamp(3.2rem, 7.5vw, 4.4rem); }
