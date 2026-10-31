@@ -1,12 +1,12 @@
 /* Motion is rendered by Webflow's published Made in Webflow slider engine.
    This stylesheet supplies Prometheus branding and responsive framing only. */
-.prometheus-webflow-showcase { position: relative; padding: 64px 0 clamp(48px, 6vw, 112px); }
-.prometheus-webflow-showcase .webgl_slider_heading_center { position: relative; z-index: 20; pointer-events: none; }
-.prometheus-webflow-showcase h2 { margin-bottom: 0; }
+.prometheus-showcase.prometheus-webflow-showcase { position: relative; padding: 0; height: 100svh; }
+.prometheus-webflow-showcase .webgl_slider_heading_center { position: absolute; inset: 32px 0 auto; z-index: 20; pointer-events: none; }
+.prometheus-webflow-showcase #showcase-title { margin: 0; font-size: clamp(44px, calc(33.714286px + 3.214286vw), 80px); line-height: 1.04; letter-spacing: -.01em; font-weight: 600; }
 .prometheus-webflow-stage-slot {
-  --mw-stage-h: clamp(560px, 90svh, 1200px);
-  --mw-card-w: clamp(280px, 30cqw, 740px);
-  --mw-card-h: calc(var(--mw-card-w) * 4 / 7);
+  --mw-stage-h: 100svh;
+  --mw-card-w: clamp(240px, 26cqw, 620px);
+  --mw-card-h: calc(var(--mw-card-w) * 9 / 16);
   --mw-backdrop: rgb(0 0 0 / 78%);
   --mw-focus: 2px solid #eddcc6;
   position: relative;
@@ -21,19 +21,19 @@
 /* Keep the in-page slot while the opened renderer fits the visible screen. */
 .prometheus-webflow-stage[data-mw-open] {
   position: fixed;
-  inset: var(--mw-preview-top, 105px) 0 0;
+  inset: 80px 0 0;
   z-index: 1001;
   width: 100%;
-  height: calc(100svh - var(--mw-preview-top, 105px));
-  height: calc(100dvh - var(--mw-preview-top, 105px));
+  height: calc(100svh - 80px);
+  height: calc(100dvh - 80px);
   min-height: 0;
   background: #080909;
 }
 @media (max-width: 991px) {
   .prometheus-webflow-stage[data-mw-open] {
-    top: var(--mw-preview-top, 80px);
-    height: calc(100svh - var(--mw-preview-top, 80px));
-    height: calc(100dvh - var(--mw-preview-top, 80px));
+    top: 64px;
+    height: calc(100svh - 64px);
+    height: calc(100dvh - 64px);
   }
 }
 .prometheus-webflow-stage:not([data-mw-ready]) [data-webgl-item] { opacity: 0; }
@@ -47,9 +47,8 @@
 }
 .prometheus-webflow-close:focus-visible { outline: 2px solid #fff4ea; outline-offset: 4px; }
 @media (max-width: 767px) {
-  .prometheus-webflow-showcase { padding-top: 48px; }
-  .prometheus-webflow-showcase h2 { font-size: clamp(22px, 7.5vw, 38px); }
-  .prometheus-webflow-stage-slot { --mw-stage-h: clamp(440px, 76svh, 800px); }
+  .prometheus-webflow-showcase .webgl_slider_heading_center { bottom: 50%; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: calc(clamp(240px, 26vw, 620px) * .6155 + 32px); }
+  .prometheus-webflow-showcase #showcase-title { font-size: clamp(28px, 6vw, 44px); }
   .prometheus-webflow-close { left: -12px; top: 24px; }
 }
 
