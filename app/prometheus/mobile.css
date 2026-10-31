@@ -183,10 +183,9 @@
   .prometheus-editorial-footer { position: sticky; bottom: var(--footer-stick-bottom, 0px); }
 }
 /* Match the WebGL canvas tone at the case/gallery boundary. */
-.prometheus-background-stage { background-color: #080909; }
 .prometheus-background-stage::after {
   content: ''; position: absolute; inset: auto 0 0; height: 180px;
-  z-index: -1; pointer-events: none; background: linear-gradient(transparent, #080909);
+  z-index: -1; pointer-events: none; background: linear-gradient(transparent, var(--prometheus-stage-base));
 }
 .prometheus-showcase.prometheus-webflow-showcase { background: #080909; border: 0; }
 /* Overlap fractional section edges so the dark team base cannot show as a hairline. */

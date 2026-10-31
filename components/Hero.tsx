@@ -36,6 +36,9 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
    // pill owns its decorations, so line wrapping cannot detach them from a word.
    html = html.replace(/<div class="home-hero_icons-wrapper">[\s\S]*?(?=<div class="home-hero-title-decor-play")/, "");
    if (playMarkup) html = html.replace(playMarkup, "");
+   // The headline preview is hidden on phones, where it sits beside the CTA.
+   const mobilePlay = inlinePlay.replace('prometheus-play-button', 'prometheus-play-button prometheus-mobile-play');
+   html = html.replace(/(<div\b[^>]*class="home-hero_btn-wrapper"[^>]*>)/, `$1${mobilePlay}`);
    prometheusHero.paragraphs.forEach((text, index) => {
      html = html.replace(new RegExp(`<p class="home-hero-quote_text home-hero-quote_text-${index + 1}">[\\s\\S]*?<\\/p>`),
        `<p class="home-hero-quote_text home-hero-quote_text-${index + 1}">${escapeHtml(text).replace(/([,.]) /g, "$1&#8194;")}</p>`);
