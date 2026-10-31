@@ -7,8 +7,6 @@
 .prometheus-faq-container { width: min(100% - 12rem, 120rem); margin-inline: auto; }
 .prometheus-faq-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 4rem; }
 .prometheus-faq-header h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 10rem; font-weight: 400; line-height: 1.1; letter-spacing: -.05em; }
-.prometheus-faq-label { display: inline-flex; align-items: center; gap: 1.6rem; flex-shrink: 0; margin: 1.6rem 0 0; font-family: Manrope, Arial, sans-serif; font-size: 1.2rem; line-height: 1.5; }
-.prometheus-faq-label > span { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border: 1px solid #0909140d; border-radius: 50%; }
 .prometheus-faq-list { width: 80%; margin: 14.5rem 0 0 auto; }
 .prometheus-faq-item { padding: 0 0 3.2rem; border-bottom: 1px solid #0909141a; }
 .prometheus-faq-item + .prometheus-faq-item { margin-top: 4rem; }
@@ -62,8 +60,6 @@
   .prometheus-faq-container { width: calc(100% - 4rem); }
   .prometheus-faq-header { display: block; }
   .prometheus-faq-header h2 { font-size: clamp(4rem, 8.5vw, 6.4rem); letter-spacing: -.05em; }
-  .prometheus-faq-label { margin-top: 2.4rem; font-size: 1rem; gap: 1rem; }
-  .prometheus-faq-label > span { width: 2.8rem; height: 2.8rem; }
   .prometheus-faq-list { width: 100%; margin-top: 6.4rem; }
   .prometheus-faq-item { padding-bottom: 2.4rem; }
   .prometheus-faq-item + .prometheus-faq-item { margin-top: 2.4rem; }
