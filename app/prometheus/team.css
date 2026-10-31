@@ -47,6 +47,11 @@
   .team-grid { gap: 2.4rem; margin-top: 8rem; }
 }
 @media (max-width: 767px) {
+  /* Keep the team visible without a full-screen cover or extra scroll distance on phones. */
+  .prometheus-team[data-animated="true"] { height: auto; }
+  [data-animated="true"] > .team-sticky { position: relative; min-height: 0; }
+  [data-animated="true"] .team-cover { display: none; }
+  .team-content { min-height: 0; }
   .team-content { width: calc(100% - 4rem); padding: 10rem 0 4rem; }
   .team-intro { grid-template-columns: 1fr; gap: 2.8rem; }
   .team-intro h2 { font-size: clamp(3.2rem, 7.5vw, 4.4rem); }
