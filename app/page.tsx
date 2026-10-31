@@ -19,6 +19,7 @@ import "./prometheus/showcase.css";
 import "./prometheus/pricing.css";
 import "./prometheus/team.css";
 import "./prometheus/closing.css";
+import "./prometheus/mobile.css";
 
 export const metadata = homepageMetadata;
 

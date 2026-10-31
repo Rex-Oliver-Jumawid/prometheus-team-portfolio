@@ -1,0 +1,293 @@
+/* Phone layouts are scoped here so desktop composition stays unchanged. */
+@media (max-width: 767px) {
+  .prometheus-preview .prometheus-hero-screen {
+    min-height: calc(100svh - 72px);
+    padding-top: 28px;
+    padding-bottom: 32px;
+    gap: 28px;
+  }
+  .prometheus-preview .home-hero-subtitle { font-size: 14px; line-height: 1.5; text-align: center; }
+  .prometheus-preview .prometheus-hero-title { font-size: clamp(30px, 8vw, 48px); line-height: 1.18; text-align: center; }
+  .prometheus-preview .home-hero-tags { justify-content: center; text-align: center; }
+  .prometheus-preview .home-hero-title-wrapper { margin-block: 0; }
+  .prometheus-preview .home-hero_top-wrapper { margin-bottom: 0; }
+  .prometheus-preview .home-hero-subtitle-wrapper { margin-bottom: 24px; width: 100%; justify-content: center; }
+  .prometheus-preview .home-hero-title-decor-play { display: none; }
+  .prometheus-preview .home-hero_mid-content { margin-block: 0; gap: 20px; }
+  .prometheus-preview .home-hero_btn-wrapper { margin: 0; }
+  .prometheus-preview .home-hero_logos-wrapper { padding-block: 24px 56px; }
+  .prometheus-preview .trusted_wrapper { padding-block: 16px; }
+  .prometheus-preview .prometheus-partners { gap: 24px; }
+  .prometheus-preview .prometheus-partner { height: 100px; }
+  .prometheus-preview .prometheus-services > .home-container,
+  .prometheus-preview .prometheus-cases > .home-container { width: calc(100% - 32px); padding-inline: 0; margin-inline: auto; }
+  .prometheus-preview .prometheus-services .home-services-top { display: flex; flex-direction: column; align-items: stretch; gap: 24px; margin-bottom: 32px; }
+  .prometheus-preview .prometheus-services .home-title-upcase { margin: 0; text-align: left; }
+  .prometheus-preview .prometheus-services .home-services-title { margin: 0; width: 100%; text-align: center; }
+  .prometheus-case-details { display: contents; }
+  .prometheus-case-layout { row-gap: 24px; }
+  .prometheus-case-tags { grid-row: 1; margin-bottom: 0; }
+  .prometheus-case-title { grid-row: 2; padding-bottom: 0; border-bottom: 0; }
+  .prometheus-case-gallery { grid-row: 3; }
+  .prometheus-case-review { grid-row: 4; }
+  .prometheus-case-footer { grid-row: 5; margin-top: 0; }
+  .prometheus-case-footer { flex-wrap: wrap; gap: 16px; }
+  .prometheus-case-person { min-width: 0; }
+  .prometheus-case-gallery {
+    flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain; gap: 12px; padding-bottom: 12px;
+    scrollbar-color: #7eacb5 #18252a; scrollbar-width: thin;
+  }
+  .prometheus-case-gallery > .prometheus-case-visual {
+    flex: 0 0 100%; scroll-snap-align: center; scroll-margin-top: 96px;
+  }
+  .prometheus-case-tags span { min-height: 40px; padding: 8px 14px; font-size: 13px; }
+  .prometheus-case-title { font-size: 26px; }
+  .prometheus-case-testimonial { font-size: 16px; line-height: 1.6; }
+  .prometheus-pricing { padding-block: 64px; }
+  .pricing-container { width: calc(100% - 32px); }
+  .pricing-intro h2 { font-size: clamp(36px, 9vw, 48px); }
+  .pricing-selector { max-width: 100%; }
+  .pricing-selector button { min-height: 44px; }
+  .pricing-plan { padding: 24px 20px; }
+  .pricing-plan-price { row-gap: 8px; }
+  .pricing-plan-unit { font-size: 14px; }
+  .team-content { padding-top: 80px; }
+  .team-member h3 { font-size: 16px; }
+  .team-member > p { font-size: 13px; }
+  .prometheus-faq { padding-block: 64px; }
+}
+@media (max-width: 600px) {
+  .prometheus-footer-foreground { padding: 28px 20px 24cqw; gap: 0; }
+  .prometheus-footer-top { flex-wrap: wrap; gap: 20px; padding-bottom: 24px; }
+  .prometheus-footer-top .prometheus-footer-email { top: 0; flex-wrap: wrap; gap: 6px 12px; font-size: clamp(16px, 4.6vw, 24px); overflow-wrap: anywhere; }
+  .prometheus-footer-main { margin-top: 32px; }
+  .prometheus-footer-main h2 { font-size: 34px; line-height: 1.08; }
+  .prometheus-footer-main p { font-size: 16px; line-height: 1.6; margin-top: 20px; }
+  .prometheus-footer-cta { white-space: normal; text-align: center; font-size: 14px; line-height: 1.5; min-height: 48px; padding: 12px 20px; margin-top: 28px; }
+  .prometheus-footer-links { margin-top: 32px; font-size: 22px; }
+  .prometheus-footer-link-label { font-size: 14px; }
+  .prometheus-footer-main-link { display: flex; align-items: center; min-height: 44px; }
+  .prometheus-footer-socials { left: 0; margin-top: 24px; gap: 12px; }
+  .prometheus-footer-social { width: 44px; height: 44px; }
+}
+@media (max-width: 991px) {
+  /* Hide the entire closed menu during hydration and entrance animations. */
+  .prometheus-nav-menu-shell[data-open="false"] { visibility: hidden; }
+  .prometheus-nav-menu-shell[data-open="true"] { visibility: visible; }
+}
+@media (max-width: 359px) {
+  .prometheus-preview .prometheus-wordmark { font-size: 20px; }
+  .prometheus-nav-inner { gap: 10px; }
+}
+@media (min-width: 601px) and (max-width: 991px) {
+  .prometheus-footer-artboard { min-height: 580px; }
+  .prometheus-footer-foreground { padding: 32px 32px 120px; column-gap: 32px; }
+  .prometheus-footer-main h2 { max-width: 100%; font-size: 32px; }
+  .prometheus-footer-main p { max-width: 100%; font-size: 16px; }
+  .prometheus-footer-links { font-size: 22px; }
+  .prometheus-footer-link-label { font-size: 14px; }
+  .prometheus-footer-cta { font-size: 14px; white-space: normal; line-height: 1.5; }
+  .prometheus-footer-social { width: 44px; height: 44px; }
+  .prometheus-footer-socials { gap: 10px; }
+}
+@media (max-width: 767px) {
+  .prometheus-case-stage { height: auto; overflow-anchor: none; }
+  .prometheus-case-stage > .prometheus-case-layout {
+    position: relative; top: auto; height: min(660px, calc(100svh - 96px)); scroll-margin-top: 80px;
+    grid-template-rows: 36px 72px minmax(120px, 24svh) minmax(0, 1fr) 48px;
+    gap: 14px; padding-block: 0 8px;
+  }
+  .prometheus-case-tags { align-self: start; gap: 8px; }
+  .prometheus-case-tags span { min-height: 34px; font-size: 12px; padding: 6px 12px; }
+  .prometheus-case-tags { flex-wrap: nowrap; }
+  .prometheus-case-title { font-size: 20px; line-height: 1.2; height: 72px; overflow: hidden; }
+  .prometheus-case-gallery { height: 100%; padding: 0; scrollbar-width: none; scroll-snap-type: x mandatory; overflow-x: auto; }
+  .prometheus-case-gallery > .prometheus-case-visual { height: 100%; aspect-ratio: auto; border-radius: 22px; }
+  .prometheus-case-review { min-height: 0; height: 100%; display: flex; flex-direction: column; gap: 12px; }
+  .prometheus-case-rating-row { flex-shrink: 0; height: 24px; min-height: 24px; flex-wrap: nowrap; }
+  .prometheus-case-review-source { font-size: 20px; }
+  .prometheus-case-testimonial { flex: 1; min-height: 0; margin: 0; overflow-y: auto; font-size: 15px; line-height: 1.45; scrollbar-width: thin; }
+  .prometheus-case-testimonial:focus-visible { outline: 2px solid #7eacb5; outline-offset: 2px; }
+  .prometheus-case-footer { flex-wrap: nowrap; gap: 8px; align-items: center; }
+  .prometheus-case-person { gap: 10px; }
+  .prometheus-case-avatar { flex: 0 0 44px; width: 44px; min-width: 44px; max-width: 44px; height: 44px; aspect-ratio: 1; border-radius: 50%; object-fit: cover; }
+  .prometheus-case-footer .prometheus-case-name { font-size: 18px; }
+  .prometheus-case-category { font-size: 11px; line-height: 1.3; margin-top: 2px; }
+  .prometheus-case-controls :is(a, button) { width: 40px; height: 40px; }
+}
+@media (max-width: 359px) {
+  .prometheus-case-tags { gap: 6px; }
+  .prometheus-case-tags span { font-size: 10px; padding-inline: 10px; }
+  .prometheus-case-tags .prometheus-case-country { padding-inline: 10px; }
+}
+
+.prometheus-case-brand-name {
+  margin: 0 0 32px; text-align: center; color: var(--prometheus-off-white);
+  font-size: clamp(30px, 3vw, 48px); font-weight: 500; line-height: 1.2;
+}
+@media (min-width: 768px) {
+  .prometheus-case-brand-name { grid-column: 1 / -1; }
+}
+@media (max-width: 767px) {
+  .prometheus-case-stage > .prometheus-case-layout {
+    height: auto;
+    grid-template-rows: auto 36px 48px auto 48px 300px;
+    row-gap: 16px;
+  }
+  .prometheus-case-brand-name {
+    display: block; grid-row: 1; margin: 0 0 8px; text-align: center;
+    color: var(--prometheus-off-white); font-size: 30px; font-weight: 500; line-height: 1.25;
+  }
+  .prometheus-case-tags { grid-row: 2; }
+  .prometheus-case-title { grid-row: 3; height: 48px; }
+  .prometheus-case-gallery { grid-row: 4; width: 100%; height: auto; aspect-ratio: 1614 / 975; }
+  .prometheus-case-gallery > .prometheus-case-visual { height: 100%; }
+  .prometheus-case-gallery :is(.prometheus-case-brand-cover, .prometheus-case-showcase) > img,
+  #case-piercing-corner .prometheus-case-brand-cover > img { object-fit: contain; }
+  .prometheus-case-gallery .prometheus-case-showcase { background: #e9edef; }
+  .prometheus-case-footer { grid-row: 5; }
+  .prometheus-case-review { grid-row: 6; }
+  .prometheus-case-title { margin: 0; padding: 0; }
+  .prometheus-case-title { text-wrap: pretty; }
+  .prometheus-cases-eyebrow { margin-bottom: 32px; }
+}
+@media (max-width: 767px) {
+  .prometheus-case-stage > .prometheus-case-layout { grid-template-rows: auto 36px 48px auto 48px 300px; }
+  .prometheus-case-title { height: 48px; }
+}
+@media (max-width: 767px) {
+  .prometheus-case-title { display: flex; align-items: flex-end; }
+}
+/* Edge-to-edge artwork: preserve proportions while filling each frame. */
+.prometheus-case-gallery :is(.prometheus-case-brand-cover, .prometheus-case-showcase) > img,
+#case-piercing-corner .prometheus-case-brand-cover > img { object-fit: cover; }
+.prometheus-case-brand-slot { grid-column: 1 / -1; text-align: center; position: relative; z-index: 3; }
+.prometheus-case-brand-slot .prometheus-case-brand-name { display: inline-block; margin-bottom: 0; transform-origin: left top; }
+@media (min-width: 768px) {
+  .prometheus-case-brand-slot { text-align: left; margin-bottom: 24px; }
+  .prometheus-case-brand-slot .prometheus-case-brand-name { text-align: left; font-size: clamp(28px, 2.4vw, 42px); }
+  .prometheus-case-details { top: 134px; }
+}
+@media (max-width: 767px) {
+  .prometheus-case-brand-slot { display: contents; }
+  .prometheus-case-brand-slot .prometheus-case-brand-name { margin-bottom: 8px; }
+}
+@media (max-width: 767px) {
+  .prometheus-pricing .pricing-selector {
+    position: sticky; top: 80px; z-index: 10;
+    box-shadow: 0 6px 20px #3c232314;
+  }
+}
+@media (max-width: 600px) {
+  .prometheus-editorial-footer { position: sticky; bottom: var(--footer-stick-bottom, 0px); }
+}
+/* Match the WebGL canvas tone at the case/gallery boundary. */
+.prometheus-background-stage { background-color: #080909; }
+.prometheus-background-stage::after {
+  content: ''; position: absolute; inset: auto 0 0; height: 180px;
+  z-index: -1; pointer-events: none; background: linear-gradient(transparent, #080909);
+}
+.prometheus-showcase.prometheus-webflow-showcase { background: #080909; border: 0; }
+/* Overlap fractional section edges so the dark team base cannot show as a hairline. */
+.prometheus-team { margin-top: -2px; }
+.team-cover-half { box-shadow: 0 -3px 0 var(--prometheus-off-white); }
+.prometheus-mobile-play { display: none; }
+@media (max-width: 767px) {
+  .prometheus-preview .home-hero_btn-wrapper { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .prometheus-preview .home-hero_btn-wrapper .prometheus-mobile-play {
+    display: inline-block; position: relative; flex: 0 0 76px;
+    width: 76px; height: 54px; margin: 0; vertical-align: middle;
+  }
+  .prometheus-mobile-play .home-hero_video-thumb { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+  .prometheus-mobile-play .home-hero-title-decor-play_btn { width: 46px; height: auto; }
+  .prometheus-preview .home-hero_btn-wrapper .button-primary { flex: 1; min-width: 0; max-width: 240px; }
+  .prometheus-preview .home-hero_btn-wrapper .button-primary_arrow { width: 44px; height: 52px; flex: 0 0 44px; }
+  .prometheus-preview .home-hero_btn-wrapper .button-primary_text-wrapper { min-width: 0; flex: 1; height: 52px; padding-inline: 12px; }
+  .prometheus-preview .home-hero_btn-wrapper .button-primary_text { font-size: 16px; white-space: nowrap; }
+}
+@media (max-width: 767px) {
+  .prometheus-preview .home-hero_btn-wrapper { width: 100%; justify-self: stretch; }
+}
+/* Keep the hero actions full-sized and anchored to opposite sides on phones. */
+@media (max-width: 767px) {
+  .prometheus-preview .home-hero_btn-wrapper {
+    width: 100%; max-width: none; align-self: stretch; justify-self: stretch;
+    justify-content: space-between; gap: 12px;
+  }
+  .prometheus-preview .home-hero_btn-wrapper .prometheus-mobile-play {
+    flex: 0 0 clamp(64px, 21.5vw, 84px); width: clamp(64px, 21.5vw, 84px); height: 60px;
+  }
+  .prometheus-preview .home-hero_btn-wrapper .button-primary {
+    flex: 0 0 clamp(190px, 57vw, 220px); width: clamp(190px, 57vw, 220px); max-width: none;
+  }
+  .prometheus-preview .home-hero_btn-wrapper .button-primary_arrow { flex: 0 0 56px; width: 56px; height: 60px; }
+  .prometheus-preview .home-hero_btn-wrapper .button-primary_text-wrapper { height: 60px; padding-inline: 18px; }
+  .prometheus-preview .home-hero_btn-wrapper .button-primary_text { font-size: 18px; }
+}
+/* The duplicate beside the CTA belongs exclusively to phone layouts. */
+@media (min-width: 768px) {
+  .prometheus-preview .home-hero_btn-wrapper .home-hero-title-decor-play.prometheus-mobile-play { display: none !important; }
+}
+/* Tablet and landscape: readable case panels, never taller-than-screen sticky text. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .prometheus-cases > .home-container { width: calc(100% - 48px); padding-inline: 0; margin-inline: auto; }
+  .prometheus-case-stage > .prometheus-case-layout {
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 44px 72px auto 56px 300px;
+    gap: 20px; height: auto; scroll-margin-top: 112px;
+  }
+  .prometheus-case-details, .prometheus-case-brand-slot { display: contents; }
+  .prometheus-case-brand-slot .prometheus-case-brand-name { grid-row: 1; margin: 0 0 12px; text-align: center; font-size: 32px; }
+  .prometheus-case-tags { grid-row: 2; margin: 0; }
+  .prometheus-case-title { grid-row: 3; height: 72px; padding: 0; margin: 0; border: 0; display: flex; align-items: flex-end; font-size: 28px; }
+  .prometheus-case-gallery { grid-row: 4; flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; aspect-ratio: 1614 / 975; }
+  .prometheus-case-gallery > .prometheus-case-visual { flex: 0 0 100%; height: 100%; aspect-ratio: auto; scroll-snap-align: center; }
+  .prometheus-case-footer { grid-row: 5; margin: 0; align-items: center; flex-wrap: nowrap; }
+  .prometheus-case-review { grid-row: 6; min-height: 0; height: 100%; display: flex; flex-direction: column; gap: 16px; }
+  .prometheus-case-testimonial { flex: 1; min-height: 0; overflow: auto; margin: 0; font-size: 16px; line-height: 1.5; }
+  .prometheus-case-avatar { flex: 0 0 52px; width: 52px; height: 52px; }
+}
+@media (max-width: 359px) {
+  .prometheus-preview .prometheus-hero-title { font-size: 27px; }
+}
+@media (max-height: 600px) and (max-width: 1100px) {
+  .prometheus-navbar { padding-block: 8px; }
+  .prometheus-preview .prometheus-hero-screen { padding-top: 24px; min-height: auto; }
+  .prometheus-showcase.prometheus-webflow-showcase { height: 560px; }
+  .prometheus-webflow-stage-slot { --mw-stage-h: 560px; }
+  .prometheus-pricing .pricing-selector { position: sticky; top: 80px; z-index: 10; }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .prometheus-pricing .pricing-selector { position: sticky; top: 112px; z-index: 10; }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .prometheus-case-details { position: static; }
+  .pricing-panels .pricing-plans[data-plan-count] { grid-template-columns: minmax(0, 1fr); max-width: 720px; margin-inline: auto; }
+  .pricing-plan { padding: 28px; }
+  .prometheus-preview .prometheus-hero-screen { padding-top: 40px; }
+  .prometheus-preview .home-hero_top-wrapper { margin-bottom: 48px; }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .prometheus-preview .prometheus-hero-screen { justify-content: flex-start; }
+}
+@media (max-height: 600px) and (max-width: 1100px) {
+  .prometheus-preview .home-section-hero { padding-top: 96px; }
+}
+/* Tall tablets should follow content height rather than reserve a full-screen gap. */
+@media (min-width: 768px) and (max-width: 1100px) {
+  .prometheus-preview .prometheus-hero-screen { min-height: auto; padding-bottom: 24px; }
+  .prometheus-preview .home-hero_logos-wrapper { padding-block: 40px 64px; }
+  .prometheus-case-stage > .prometheus-case-layout { grid-template-rows: auto 44px 72px auto 56px 180px; }
+  .prometheus-showcase.prometheus-webflow-showcase { height: clamp(560px, 68vw, 760px); }
+  .prometheus-webflow-stage-slot { --mw-stage-h: clamp(560px, 68vw, 760px); }
+}
+@media (max-width: 767px) {
+  .prometheus-preview .home-hero_btn-wrapper .prometheus-mobile-play { margin-left: clamp(0px, calc((100vw - 360px) * .25), 20px); }
+}
+/* Large tablets in landscape retain desktop composition without full-screen dead space. */
+@media (min-width: 1101px) and (max-width: 1440px) and (min-height: 900px) {
+  .prometheus-preview .prometheus-hero-screen { min-height: auto; padding-block: 40px 24px; justify-content: flex-start; }
+  .prometheus-preview .home-hero_logos-wrapper { padding-block: 40px 64px; }
+  .prometheus-showcase.prometheus-webflow-showcase { height: 760px; }
+  .prometheus-webflow-stage-slot { --mw-stage-h: 760px; }
+}

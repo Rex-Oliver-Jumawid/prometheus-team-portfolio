@@ -1,20 +1,54 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CaseStudy } from "../content/caseStudies";
 import Image from "next/image";
+import CaseBrand from "./CaseBrand";
 
 const readablePunctuation = (text: string) => text.replace(/([,.]) /g, "$1\u2005");
 
 export default function CaseStudies({ cases }: { cases: readonly CaseStudy[] }) {
   const sectionRef = useRef<HTMLElement>(null);
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 1100px)");
+    const update = () => setMobile(query.matches);
+    update(); query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
   const [activeCards, setActiveCards] = useState<Record<string, number>>({});
   const [visibleCards, setVisibleCards] = useState<Record<string, number>>({});
   const displayedCards = useRef<Record<string, number>>({});
+  useLayoutEffect(() => {
+    const fit = () => {
+      sectionRef.current?.querySelectorAll<HTMLElement>(".prometheus-case-title").forEach(title => {
+        title.style.removeProperty("font-size");
+        if (!window.matchMedia("(max-width: 1100px)").matches) return;
+        let size = 20;
+        while (title.scrollHeight > title.clientHeight + 1 && size > 16) {
+          size -= .5;
+          title.style.fontSize = `${size}px`;
+        }
+      });
+      sectionRef.current?.querySelectorAll<HTMLElement>(".prometheus-case-testimonial").forEach(comment => {
+        comment.style.removeProperty("font-size");
+        if (!window.matchMedia("(max-width: 1100px)").matches) return;
+        let size = 15;
+        comment.style.fontSize = `${size}px`;
+        while (comment.scrollHeight > comment.clientHeight + 1 && size > 12) {
+          size -= .5;
+          comment.style.fontSize = `${size}px`;
+        }
+      });
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [activeCards]);
   useEffect(() => {
     const changed = cases.filter(item => item.story && Math.min(displayedCards.current[item.id] ?? 0, item.story.length - 1) !== Math.min(visibleCards[item.id] ?? 0, item.story.length - 1));
     const elements = changed.flatMap(item => Array.from(sectionRef.current?.querySelectorAll<HTMLElement>(`#case-${item.id} .prometheus-case-title, #case-${item.id} .prometheus-case-review, #case-${item.id} .prometheus-case-footer`) ?? []));
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.matchMedia("(max-width: 1100px)").matches;
     const animations: Animation[] = [];
     let timer = 0;
     let frame = 0;
@@ -55,7 +89,9 @@ export default function CaseStudies({ cases }: { cases: readonly CaseStudy[] }) 
         let closest = Infinity;
         cards.forEach((card, index) => {
           const rect = card.getBoundingClientRect();
-          const distance = Math.abs(rect.top + rect.height / 2 - focusLine);
+          const distance = window.matchMedia("(max-width: 1100px)").matches
+            ? Math.abs(rect.left + rect.width / 2 - (card.parentElement!.getBoundingClientRect().left + card.parentElement!.clientWidth / 2))
+            : Math.abs(rect.top + rect.height / 2 - focusLine);
           if (distance < closest) { closest = distance; next[id] = index; }
         });
       });
@@ -65,7 +101,9 @@ export default function CaseStudies({ cases }: { cases: readonly CaseStudy[] }) 
     update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); };
+    const tracks = articles.flatMap(article => Array.from(article.querySelectorAll(".prometheus-case-gallery")));
+    tracks.forEach(track => track.addEventListener("scroll", schedule, { passive: true }));
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); tracks.forEach(track => track.removeEventListener("scroll", schedule)); };
   }, [cases]);
   return (
     <section ref={sectionRef} id="works" className="home-updated-section prometheus-cases" aria-labelledby="works-title">
@@ -78,8 +116,10 @@ export default function CaseStudies({ cases }: { cases: readonly CaseStudy[] }) 
             const showRating = !story?.team && (!original.story || active === original.story.length - 1);
             const item = story ? { ...original, headline: story.headline, feedback: { ...original.feedback, ...story } } : original;
             return (
-            <article id={`case-${item.id}`} className="prometheus-case-layout" key={item.id} aria-labelledby={`case-title-${item.id}`}>
+            <div className="prometheus-case-stage" key={item.id}>
+            <article id={`case-${item.id}`} className="prometheus-case-layout" aria-labelledby={`case-title-${item.id}`}>
               <div className="prometheus-case-details">
+                <CaseBrand name={item.name} />
                 <div className="prometheus-case-tags">{item.tags.map(tag => <span key={tag}>{tag}</span>)}<span className="prometheus-case-country" role="img" aria-label="Philippines" title="Philippines"><svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><path fill="#0038a8" d="M0 0h30v10H0z"/><path fill="#ce1126" d="M0 10h30v10H0z"/><path fill="#fff" d="m0 0 17.32 10L0 20z"/><g fill="#fcd116"><circle cx="6" cy="10" r="2"/><path stroke="#fcd116" strokeWidth=".7" d="M6 6v8m-4-4h8M3.2 7.2l5.6 5.6m0-5.6-5.6 5.6"/><path d="m2.5 2 .3 1 1 .1-.8.6.3 1- .8-.6-.8.6.3-1-.8-.6 1-.1zm0 13 .3 1 1 .1-.8.6.3 1-.8-.6-.8.6.3-1-.8-.6 1-.1zm11-6.5.3 1 1 .1-.8.6.3 1-.8-.6-.8.6.3-1-.8-.6 1-.1z"/></g></svg></span></div>
                 <h3 id={`case-title-${item.id}`} className="prometheus-case-title">{readablePunctuation(item.headline)}</h3>
                 <div className="prometheus-case-review" data-sample={item.feedback.isSample}>
@@ -89,7 +129,7 @@ export default function CaseStudies({ cases }: { cases: readonly CaseStudy[] }) 
                       {Array.from({ length: 5 }, (_, star) => <Star key={star} filled={star < item.feedback.rating} />)}
                     </span>}
                   </div>
-                  <blockquote className="prometheus-case-testimonial">{readablePunctuation(item.feedback.quote)}</blockquote>
+                  <blockquote className="prometheus-case-testimonial" tabIndex={0} data-lenis-prevent="" aria-label="Case comment">{readablePunctuation(item.feedback.quote)}</blockquote>
                 </div>
                 <div className="prometheus-case-footer">
                   <div className="prometheus-case-person">
@@ -100,27 +140,42 @@ export default function CaseStudies({ cases }: { cases: readonly CaseStudy[] }) 
                     </div>
                   </div>
                   <div className="prometheus-case-controls" aria-label={`${item.name} case navigation`}>
-                    <div className="prometheus-case-control-buttons">
-                      <a href={original.story ? `#case-${item.id}-image-${Math.max(0, active - 1)}` : `#case-${cases[Math.max(0, index - 1)].id}`} aria-label={original.story ? "Previous project image" : "Previous case"}><Arrow up /></a>
-                      <a href={original.story ? `#case-${item.id}-image-${Math.min(3, active + 1)}` : `#case-${cases[Math.min(cases.length - 1, index + 1)].id}`} aria-label={original.story ? "Next project image" : "Next case"}><Arrow /></a>
+                    <div className="prometheus-case-control-buttons" onClick={event => {
+                      if (!window.matchMedia("(max-width: 1100px)").matches) return;
+                      const control = (event.target as Element).closest<HTMLElement>("a,button");
+                      const id = control?.dataset.image ?? control?.getAttribute("href")?.slice(1);
+                      const target = id && document.getElementById(id);
+                      if (!target) return;
+                      event.preventDefault();
+                      event.stopPropagation();
+                      target.parentElement?.scrollTo({ left: target.offsetLeft - target.parentElement.offsetLeft, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+                    }}>
+                      {mobile ? <>
+                        <button type="button" data-image={`case-${item.id}-image-${Math.max(0, active - 1)}`} aria-label="Previous project image"><Arrow up /></button>
+                        <button type="button" data-image={`case-${item.id}-image-${Math.min(3, active + 1)}`} aria-label="Next project image"><Arrow /></button>
+                      </> : <>
+                        <a href={original.story ? `#case-${item.id}-image-${Math.max(0, active - 1)}` : `#case-${cases[Math.max(0, index - 1)].id}`} aria-label={original.story ? "Previous project image" : "Previous case"}><Arrow up /></a>
+                        <a href={original.story ? `#case-${item.id}-image-${Math.min(3, active + 1)}` : `#case-${cases[Math.min(cases.length - 1, index + 1)].id}`} aria-label={original.story ? "Next project image" : "Next case"}><Arrow /></a>
+                      </>}
                     </div>
                   </div>
                 </div>
               </div>
               <div className="prometheus-case-gallery" aria-label={`${item.name} project gallery`}>
-                {item.coverImage && <figure className="prometheus-case-visual prometheus-case-brand-cover"><Image src={item.coverImage} alt={`${item.name} brand artwork`} width={1614} height={975} sizes="(max-width: 767px) 100vw, 60vw" /></figure>}
+                {item.coverImage && <figure className="prometheus-case-visual prometheus-case-brand-cover"><Image src={item.coverImage} alt={`${item.name} brand artwork`} width={1614} height={975} sizes="(max-width: 1100px) 100vw, 60vw" /></figure>}
                 {(item.coverImage ? (item.screenshots ?? []).slice(1) : (item.screenshots ?? [])).map((source, imageIndex) => (
-                  imageIndex === 0 && item.showcaseImage ? <figure key={source} className="prometheus-case-visual prometheus-case-showcase"><Image src={item.showcaseImage} alt={`${item.name} digital showroom showcase`} width={item.id === "piercing-corner" ? 1440 : 1448} height={item.id === "piercing-corner" ? 1024 : 1086} sizes="(max-width: 767px) 100vw, 60vw" /></figure> : <figure key={source} className={`prometheus-case-visual prometheus-case-screenshot-card is-${item.id}`}>
+                  imageIndex === 0 && item.showcaseImage ? <figure key={source} className="prometheus-case-visual prometheus-case-showcase"><Image src={item.showcaseImage} alt={`${item.name} digital showroom showcase`} width={item.id === "piercing-corner" ? 1440 : 1448} height={item.id === "piercing-corner" ? 1024 : 1086} sizes="(max-width: 1100px) 100vw, 60vw" /></figure> : <figure key={source} className={`prometheus-case-visual prometheus-case-screenshot-card is-${item.id}`}>
                     <a href={item.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${item.name} live website`} className={`prometheus-case-device${source.includes("-mobile") ? " is-mobile" : ""}`}>
                       <div className="prometheus-case-device-bar" aria-hidden="true"><i /><i /><i /><span>{item.name}</span></div>
                       <img src={source} alt={`${item.name}, ${source.includes("-mobile") ? "mobile" : "desktop"} website preview ${imageIndex + 1}`} className="prometheus-case-screenshot" />
                     </a>
                   </figure>
                 ))}
-                {(item.screenshots?.length ?? 0) < 4 && (item.operationsImage ? <figure className="prometheus-case-visual prometheus-case-showcase"><Image src={item.operationsImage} alt={`${item.name} centralized business operations showcase`} width={1448} height={1086} sizes="(max-width: 767px) 100vw, 60vw" /></figure> : <ProjectOverview item={item} />)}
-                {(item.screenshots?.length ?? 0) < 3 && (item.workspaceImage ? <figure className="prometheus-case-visual prometheus-case-showcase"><Image src={item.workspaceImage} alt={`${item.name} website and business system across desktop, tablet, laptop, and mobile`} width={1536} height={1024} sizes="(max-width: 767px) 100vw, 60vw" /></figure> : <ProjectScope item={item} />)}
+                {(item.screenshots?.length ?? 0) < 4 && (item.operationsImage ? <figure className="prometheus-case-visual prometheus-case-showcase"><Image src={item.operationsImage} alt={`${item.name} centralized business operations showcase`} width={1448} height={1086} sizes="(max-width: 1100px) 100vw, 60vw" /></figure> : <ProjectOverview item={item} />)}
+                {(item.screenshots?.length ?? 0) < 3 && (item.workspaceImage ? <figure className="prometheus-case-visual prometheus-case-showcase"><Image src={item.workspaceImage} alt={`${item.name} website and business system across desktop, tablet, laptop, and mobile`} width={1536} height={1024} sizes="(max-width: 1100px) 100vw, 60vw" /></figure> : <ProjectScope item={item} />)}
               </div>
             </article>
+            </div>
           ); })}
         </div>
       </div>
