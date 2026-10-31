@@ -200,7 +200,7 @@
 .prometheus-footer-social { background: none; }
 .prometheus-footer-social img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
-button.prometheus-footer-social { padding: 0; border: 0; cursor: pointer; flex-shrink: 0; transition: none; overflow: visible; }
+a.prometheus-footer-social { padding: 0; border: 0; cursor: pointer; flex-shrink: 0; transition: none; overflow: visible; }
 .prometheus-footer-social:focus-visible { outline: 2px solid #fff4ea; outline-offset: 5px; border-radius: 50%; }
 .prometheus-footer-social img { pointer-events: none; }
 
