@@ -71,7 +71,7 @@ export default function PrometheusNavigation() {
     }}>
       <div className="container is-relative w-container">
         <div className="navbar_main prometheus-nav-inner">
-          <a href="/prometheus" aria-label="Prometheus home" className="navbar_logo-wrapper w-inline-block"><span className="prometheus-wordmark">prometheus</span></a>
+          <a href="/" aria-label="Prometheus home" className="navbar_logo-wrapper w-inline-block"><span className="prometheus-wordmark">prometheus</span></a>
           <div className="prometheus-nav-menu-shell" data-open={open}>
           <div id="prometheus-menu" ref={menu} className="prometheus-nav-links" data-open={open} inert={mobile && !open} data-lenis-prevent="">
             {links.map(link => <div className={`prometheus-nav-item${link.label === "Services" ? " is-services" : ""}`} key={link.label}>
