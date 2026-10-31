@@ -15,13 +15,13 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
    html = html.replaceAll('href="https://arounda.agency/contact"', 'href="/contact"');
    let letterIndex = 0;
    const letterCount = prometheusHero.headline.reduce((count, part) => count + part.text.replace(/\s/g, "").length, 0);
-   const revealText = (value: string) => value.split(/(\s+)/).map(word => /^\s+$/.test(word) ? word : `<span class="hero-reveal-word" aria-label="${escapeHtml(word)}">${Array.from(word).map(letter => `<span aria-hidden="true" class="hero-reveal-letter" style="--letter-delay:${(80 + 240 * letterIndex++ / Math.max(1, letterCount - 1)).toFixed(1)}ms">${escapeHtml(letter)}</span>`).join("")}</span>`).join("");
+   const revealText = (value: string) => value.split(/(\s+)/).map(word => /^\s+$/.test(word) ? word : `<span class="hero-reveal-word" aria-label="${escapeHtml(word)}">${Array.from(word).map(letter => `<span aria-hidden="true" class="hero-reveal-letter" style="--letter-delay:${(750 + 600 * letterIndex++ / Math.max(1, letterCount - 1)).toFixed(1)}ms">${escapeHtml(letter)}</span>`).join("")}</span>`).join("");
    const playMarkup = html.match(/<div class="home-hero-title-decor-play"[^>]*>[\s\S]*?<\/div>/)?.[0] ?? "";
    const inlinePlay = playMarkup.replace(/^<div\b[^>]*>/, '<button type="button" data-play-demo aria-label="Play our Furniture Odyssey demo" class="home-hero-title-decor-play prometheus-play-button">').replace(/<\/div>$/, "</button>");
    html = html.replace(/<h1 class="home-hero-subtitle">[\s\S]*?<\/h1>/,
      `<p class="home-hero-subtitle">${escapeHtml(prometheusHero.eyebrow)}</p>`);
    const headline = prometheusHero.headline.map(part => {
-     const partDelay = 80 + 240 * letterIndex / Math.max(1, letterCount - 1);
+     const partDelay = 750 + 600 * letterIndex / Math.max(1, letterCount - 1);
      const text = revealText(part.text);
      if ("italic" in part) return `<em class="is-italic">${text}</em>`;
      if ("pill" in part) {
