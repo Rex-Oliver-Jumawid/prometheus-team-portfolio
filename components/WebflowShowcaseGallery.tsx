@@ -62,6 +62,10 @@ export default function WebflowShowcaseGallery({ sheets }: { sheets: ShowcaseShe
       }
     };
     const fitPreview = () => {
+      // Match the actual header height, including responsive spacing and zoom.
+      const header = document.querySelector<HTMLElement>(".prometheus-navbar");
+      const top = Math.max(0, header?.getBoundingClientRect().bottom ?? 0);
+      element.style.setProperty("--mw-preview-top", `${top}px`);
       if (!slider) return;
       // Upstream adds a 7%-of-width inset before frameGap. Replace that
       // generous inset with a small responsive safe margin for our artwork.
@@ -94,6 +98,10 @@ export default function WebflowShowcaseGallery({ sheets }: { sheets: ShowcaseShe
     window.addEventListener("scroll", dismissOnScroll, { passive: true });
     element.addEventListener("wheel", dismissOnWheel, { passive: true, capture: true });
     element.addEventListener("touchmove", dismissOnScroll, { passive: true });
+    const headerObserver = new ResizeObserver(fitPreview);
+    const header = document.querySelector(".prometheus-navbar");
+    if (header) headerObserver.observe(header);
+    window.visualViewport?.addEventListener("resize", fitPreview);
     const previewObserver = new MutationObserver(syncPreview);
     previewObserver.observe(element, { attributes: true, attributeFilter: ["data-mw-open"] });
     return () => {
@@ -104,6 +112,8 @@ export default function WebflowShowcaseGallery({ sheets }: { sheets: ShowcaseShe
       element.removeEventListener("wheel", dismissOnWheel, true);
       element.removeEventListener("touchmove", dismissOnScroll);
       previewObserver.disconnect();
+      headerObserver.disconnect();
+      window.visualViewport?.removeEventListener("resize", fitPreview);
       (slider ?? element._mw)?.destroy();
     };
   }, [sheets, fallback]);

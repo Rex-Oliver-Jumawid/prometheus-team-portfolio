@@ -14,7 +14,7 @@ export default function ContactPage() {
     <header className="inquiry-header"><Link href="/" aria-label="Prometheus home">prometheus</Link><Link href="/">Back to home</Link></header>
     <div className="inquiry-layout">
       <aside className="inquiry-profile">
-        <div className="inquiry-person"><Image src="/team/rex-oliver-jumawid.png" alt="Oliver Jumawid" width={110} height={110} priority /><div><h2>Oliver Jumawid</h2><p>Co-Founder &amp; DevOps</p></div></div>
+        <div className="inquiry-person"><Image src="/team/olivero.png" alt="Oliver Jumawid" width={110} height={110} priority /><div><h2>Oliver Jumawid</h2><p>Co-Founder &amp; DevOps</p></div></div>
         <p className="inquiry-promise">Your next idea.<br /><em>Our next build.</em></p>
         <ul><li>Let’s understand your business and the problem you want to solve.</li><li>See a free prototype before deciding to move forward.</li><li>Start with what matters most and grow from there.</li></ul>
       </aside>

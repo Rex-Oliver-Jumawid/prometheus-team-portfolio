@@ -21,19 +21,19 @@
 /* Keep the in-page slot while the opened renderer fits the visible screen. */
 .prometheus-webflow-stage[data-mw-open] {
   position: fixed;
-  inset: 80px 0 0;
+  inset: var(--mw-preview-top, 105px) 0 0;
   z-index: 1001;
   width: 100%;
-  height: calc(100svh - 80px);
-  height: calc(100dvh - 80px);
+  height: calc(100svh - var(--mw-preview-top, 105px));
+  height: calc(100dvh - var(--mw-preview-top, 105px));
   min-height: 0;
   background: #080909;
 }
 @media (max-width: 991px) {
   .prometheus-webflow-stage[data-mw-open] {
-    top: 64px;
-    height: calc(100svh - 64px);
-    height: calc(100dvh - 64px);
+    top: var(--mw-preview-top, 80px);
+    height: calc(100svh - var(--mw-preview-top, 80px));
+    height: calc(100dvh - var(--mw-preview-top, 80px));
   }
 }
 .prometheus-webflow-stage:not([data-mw-ready]) [data-webgl-item] { opacity: 0; }
