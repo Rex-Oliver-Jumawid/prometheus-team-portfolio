@@ -20,9 +20,9 @@ export default function FooterSection() {
             <a className="prometheus-footer-cta" href={contact.meetingUrl} target="_blank" rel="noopener noreferrer">{contact.meetingLabel} <span aria-hidden="true">↗</span></a>
           </div>
           <div className="prometheus-footer-socials" aria-label="Social channels">
-            <button type="button" className="prometheus-footer-social social-facebook" aria-label="Facebook"><img src="/favicons/facebook.svg" alt="" width="48" height="48" /></button>
-            <button type="button" className="prometheus-footer-social social-instagram" aria-label="Instagram"><img src="/favicons/instagram.svg" alt="" width="48" height="48" /></button>
-            <button type="button" className="prometheus-footer-social social-viber" aria-label="Viber"><img src="/favicons/viber.svg" alt="" width="48" height="48" /></button>
+            <a href="https://www.facebook.com/profile.php?id=61593771133079" target="_blank" rel="noopener noreferrer" className="prometheus-footer-social social-facebook" aria-label="Facebook"><img src="/favicons/facebook.svg" alt="" width="48" height="48" /></a>
+            <a href="https://www.instagram.com/prometheus.exps/" target="_blank" rel="noopener noreferrer" className="prometheus-footer-social social-instagram" aria-label="Instagram"><img src="/favicons/instagram.svg" alt="" width="48" height="48" /></a>
+            <a href="viber://chat?number=%2B639613591311" className="prometheus-footer-social social-viber" aria-label="Viber"><img src="/favicons/viber.svg" alt="" width="48" height="48" /></a>
           </div>
         </div>
         <FooterWordmark />
