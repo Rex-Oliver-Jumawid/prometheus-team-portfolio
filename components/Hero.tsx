@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import HeroVideo from "./HeroVideo";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { prometheusHero } from "../content/prometheusHero";
 
@@ -15,7 +16,7 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
    const letterCount = prometheusHero.headline.reduce((count, part) => count + part.text.replace(/\s/g, "").length, 0);
    const revealText = (value: string) => value.split(/(\s+)/).map(word => /^\s+$/.test(word) ? word : `<span class="hero-reveal-word" aria-label="${escapeHtml(word)}">${Array.from(word).map(letter => `<span aria-hidden="true" class="hero-reveal-letter" style="--letter-delay:${(750 + 600 * letterIndex++ / Math.max(1, letterCount - 1)).toFixed(1)}ms">${escapeHtml(letter)}</span>`).join("")}</span>`).join("");
    const playMarkup = html.match(/<div class="home-hero-title-decor-play"[^>]*>[\s\S]*?<\/div>/)?.[0] ?? "";
-   const inlinePlay = playMarkup.replace(/^<div\b[^>]*>/, '<span class="home-hero-title-decor-play">').replace(/<\/div>$/, "</span>");
+   const inlinePlay = playMarkup.replace(/^<div\b[^>]*>/, '<button type="button" data-play-demo aria-label="Play our Furniture Odyssey demo" class="home-hero-title-decor-play prometheus-play-button">').replace(/<\/div>$/, "</button>");
    html = html.replace(/<h1 class="home-hero-subtitle">[\s\S]*?<\/h1>/,
      `<p class="home-hero-subtitle">${escapeHtml(prometheusHero.eyebrow)}</p>`);
    const headline = prometheusHero.headline.map(part => {
@@ -57,5 +58,13 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
    html = html.replace(/(<div class="prometheus-hero-layout"[^>]*>)/, '$1<div class="hero_main prometheus-hero-screen">');
    html = html.replace(/(<div id="[^"]*" class="home-hero_logos-wrapper")/, '</div>$1');
  }
- return <div dangerouslySetInnerHTML={{__html:html}} />;
+ const markup = <div dangerouslySetInnerHTML={{__html:html}} />;
+ if (brand !== "prometheus") return markup;
+ let videoSrc: string | null = null;
+ try {
+   const videos = readdirSync(join(process.cwd(), "public/videos")).filter(file => /\.(mp4|webm|ogv)$/i.test(file)).sort();
+   const video = videos.find(file => /furniture.*odyssey/i.test(file)) ?? videos[0];
+   if (video) videoSrc = `/videos/${encodeURIComponent(video)}`;
+ } catch { /* Show a fallback if the demo asset is unavailable. */ }
+ return <HeroVideo videoSrc={videoSrc}>{markup}</HeroVideo>;
 }

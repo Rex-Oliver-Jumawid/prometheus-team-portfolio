@@ -1,9 +1,11 @@
 import { GeistSans } from "geist/font/sans";
 import PricingPlans from "./PricingPlans";
+import PricingReveal from "./PricingReveal";
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className={`prometheus-pricing ${GeistSans.variable}`} aria-labelledby="pricing-title">
+    <div className="pricing-reveal-backdrop">
+      <PricingReveal className={GeistSans.variable}>
       <div className="pricing-container">
         <header className="pricing-intro">
           <h2 id="pricing-title"><em>Premium Experiences</em></h2>
@@ -13,6 +15,7 @@ export default function PricingSection() {
         <PricingPlans />
 
       </div>
-    </section>
+    </PricingReveal>
+    </div>
   );
 }

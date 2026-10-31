@@ -736,3 +736,12 @@
 @media (prefers-reduced-motion: reduce) {
   .prometheus-headline-pill { animation: none; }
 }
+
+.prometheus-preview .prometheus-play-button { border: 0; padding: 0; background: transparent; cursor: pointer; color: inherit; font: inherit; }
+.prometheus-play-button:focus-visible { outline: 3px solid var(--prometheus-off-white); outline-offset: 6px; border-radius: 1.5rem; }
+.prometheus-video-dialog { position: fixed; inset: 0; margin: auto; height: fit-content; width: min(110rem, 94vw); max-width: 94vw; max-height: 92svh; box-sizing: border-box; border: 0; padding: 0; overflow: visible; color: #fff4ea; background: #151011; border-radius: 2rem; }
+.prometheus-video-dialog::backdrop { background: rgb(10 6 8 / 90%); }
+.prometheus-video-panel { position: relative; padding: 4.8rem 1.2rem 1.2rem; }
+.prometheus-video-panel video { display: block; width: 100%; max-height: calc(92svh - 6rem); object-fit: contain; background: #000; border-radius: 1rem; }
+.prometheus-video-panel p { padding: 3rem; font-size: 1.6rem; }
+.prometheus-video-close { position: absolute; right: 1rem; top: .3rem; width: 4.4rem; height: 4.4rem; background: transparent; color: inherit; border: 0; cursor: pointer; font-size: 3rem; }
