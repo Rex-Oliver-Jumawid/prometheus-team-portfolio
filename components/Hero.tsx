@@ -12,6 +12,7 @@ const pillArtwork = {
 export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prometheus" }) {
  let html = readFileSync(join(process.cwd(), "reference/hero.html"), "utf8");
  if (brand === "prometheus") {
+   html = html.replaceAll('href="https://arounda.agency/contact"', 'href="/contact"');
    let letterIndex = 0;
    const letterCount = prometheusHero.headline.reduce((count, part) => count + part.text.replace(/\s/g, "").length, 0);
    const revealText = (value: string) => value.split(/(\s+)/).map(word => /^\s+$/.test(word) ? word : `<span class="hero-reveal-word" aria-label="${escapeHtml(word)}">${Array.from(word).map(letter => `<span aria-hidden="true" class="hero-reveal-letter" style="--letter-delay:${(750 + 600 * letterIndex++ / Math.max(1, letterCount - 1)).toFixed(1)}ms">${escapeHtml(letter)}</span>`).join("")}</span>`).join("");

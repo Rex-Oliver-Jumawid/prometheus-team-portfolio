@@ -12,6 +12,8 @@ const HeroVideo = HeroVideoModule.default ?? HeroVideoModule;
 test("Prometheus hero exposes a keyboard play button connected to the bundled demo", () => {
   const doc = new JSDOM(renderToStaticMarkup(React.createElement(Hero, { brand: "prometheus" }))).window.document;
   assert.equal(doc.querySelector('[data-play-demo]').tagName, 'BUTTON');
+  assert.ok(doc.querySelector('a[href="/contact"]'));
+  assert.equal(doc.querySelector('a[href="https://arounda.agency/contact"]'), null);
 });
 
 test("video opens only on Play, releases media on close, restores focus and recovers from missing media", async () => {

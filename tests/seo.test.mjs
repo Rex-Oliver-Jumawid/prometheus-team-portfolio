@@ -22,3 +22,11 @@ test("indexing and sitemap use only the configured homepage", () => {
   assert.equal(graph[0].hasOfferCatalog.itemListElement.length, 4);
   assert.equal(graph.some(item => item.aggregateRating), false);
 });
+
+test("homepage sharing declares the branded root image with social dimensions", () => {
+  const image = homepageMetadata.openGraph.images[0];
+  assert.equal(image.url, publicHomepage() ? new URL('/opengraph-image', publicHomepage()).href : '/opengraph-image');
+  assert.equal(image.width, 1200);
+  assert.equal(image.height, 630);
+  assert.equal(homepageMetadata.twitter.images[0].url, image.url);
+});

@@ -106,7 +106,7 @@ export default function ShowcaseGallery({ sheets }: { sheets: ShowcaseSheet[] })
       const dt = last ? Math.min((time - last) / 1000, .05) : 0;
       last = time;
       const target = paused || selected || dragging || keyboardFocused ? 0
-        : pitch.current * .22;
+        : active ? 0 : pitch.current * .22;
       // Preserve release velocity, then ease back to the conveyor speed. Time
       // based damping keeps flicks consistent across 60Hz and 120Hz displays.
       if (!dragging) {
