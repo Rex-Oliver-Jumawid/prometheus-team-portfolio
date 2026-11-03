@@ -1,14 +1,17 @@
-# Homepage SEO
+# Public SEO pages
 
-The Prometheus page is currently served at `/prometheus`. The captured reference at `/` remains noindex and is excluded from the sitemap.
+The Prometheus homepage is served at `/`. `/prometheus` permanently redirects to `/`.
 
-## When the public domain is ready
+Set `SEO_HOMEPAGE_URL=https://www.promths.com/` on the production deployment and rebuild. Leave it unset on previews. Without it, public pages stay noindex, with no guessed canonical or sitemap entries.
 
-1. Set `SEO_HOMEPAGE_URL` to the complete HTTPS URL of the actual Prometheus homepage on the production deployment. Include `/prometheus` while that is its public route. Do not set it on preview deployments.
-2. Rebuild. This enables indexing and generates the canonical URL, absolute share URLs, and the sitemap entry. Without this setting the page stays noindex, with no guessed canonical or sitemap URL.
-3. Check `/robots.txt`, `/sitemap.xml`, and the rendered page metadata on the public deployment. If moving Prometheus to `/`, move the route and redirect the old URL before changing the setting.
-4. Verify the domain in Google Search Console and submit `/sitemap.xml`.
+Public routes:
+- `/`
+- `/services/business-websites`
+- `/services/business-systems`
+- `/services/portfolio-websites`
+- `/work/piercing-corner`
+- `/about`
 
-The page includes a descriptive title and summary, Open Graph/Twitter metadata, a generated sharing image, and Organization/WebSite/service JSON-LD. Business details are limited to confirmed information; no invented address, review ratings, or social profiles are included. Search appearance and rankings are not guaranteed.
+Each information page has its own title, description, canonical, robots override, and social metadata. Main content, pricing and FAQ answers are server-rendered. Service pages use the same package data as the homepage. The case study reuses the existing project content and images, excludes the sample testimonial, and does not claim quantified results.
 
-The visible hero identifies the services and Philippine audience. Existing service descriptions, case studies, pricing and FAQ answers remain readable in server-rendered HTML. Personal pricing is available through the pricing selector. Keep claims, prices and case-study outcomes accurate as the content changes.
+Public paths are listed in `lib/page-seo.ts` and included in `/sitemap.xml`. The contact inquiry remains noindex and is excluded. The homepage links to service pages, the case study, and About. Check rendered metadata, `/robots.txt`, and `/sitemap.xml` after deployment. Verify the domain in Google Search Console and submit the sitemap. Search rankings and AI citations are not guaranteed.

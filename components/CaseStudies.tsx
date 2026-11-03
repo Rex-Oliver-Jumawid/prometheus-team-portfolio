@@ -122,6 +122,7 @@ export default function CaseStudies({ cases }: { cases: readonly CaseStudy[] }) 
                 <CaseBrand name={item.name} />
                 <div className="prometheus-case-tags">{item.tags.map(tag => <span key={tag}>{tag}</span>)}<span className="prometheus-case-country" role="img" aria-label="Philippines" title="Philippines"><svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><path fill="#0038a8" d="M0 0h30v10H0z"/><path fill="#ce1126" d="M0 10h30v10H0z"/><path fill="#fff" d="m0 0 17.32 10L0 20z"/><g fill="#fcd116"><circle cx="6" cy="10" r="2"/><path stroke="#fcd116" strokeWidth=".7" d="M6 6v8m-4-4h8M3.2 7.2l5.6 5.6m0-5.6-5.6 5.6"/><path d="m2.5 2 .3 1 1 .1-.8.6.3 1- .8-.6-.8.6.3-1-.8-.6 1-.1zm0 13 .3 1 1 .1-.8.6.3 1-.8-.6-.8.6.3-1-.8-.6 1-.1zm11-6.5.3 1 1 .1-.8.6.3 1-.8-.6-.8.6.3-1-.8-.6 1-.1z"/></g></svg></span></div>
                 <h3 id={`case-title-${item.id}`} className="prometheus-case-title">{readablePunctuation(item.headline)}</h3>
+                {original.id === "piercing-corner" && <a href="/work/piercing-corner" style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 4 }}>Read the full case study ↗</a>}
                 <div className="prometheus-case-review" data-sample={item.feedback.isSample}>
                   <div className="prometheus-case-rating-row">
                     <span className="prometheus-case-review-source">{original.story && active === 0 ? "Challenge" : story?.team ? "Our\u2002Approach" : "Review"}</span>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 const groups = [
   {
     title: "Websites",
@@ -59,6 +60,8 @@ export default function Services() {
                     </details>
                   ))}
                 </div>
+                {group.title === "Websites" && <p className="prometheus-service-description"><Link href="/services/business-websites">Explore business websites ↗</Link><br /><Link href="/services/portfolio-websites">Personal & professional websites ↗</Link></p>}
+                {group.title === "Business Systems" && <p className="prometheus-service-description"><Link href="/services/business-systems">Explore business systems ↗</Link></p>}
               </article>
             ))}
           </div>
