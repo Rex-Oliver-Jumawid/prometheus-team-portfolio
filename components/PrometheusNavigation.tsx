@@ -7,7 +7,7 @@ const links = [
   { label: "Services", href: "#services" },
   { label: "Works", href: "#works" },
   { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "/about" },
+  { label: "About", href: "#about" },
 ] as const;
 
 export default function PrometheusNavigation() {
