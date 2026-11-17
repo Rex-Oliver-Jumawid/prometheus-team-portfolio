@@ -7,8 +7,6 @@
 .prometheus-faq-container { width: min(100% - 12rem, 120rem); margin-inline: auto; }
 .prometheus-faq-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 4rem; }
 .prometheus-faq-header h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 10rem; font-weight: 400; line-height: 1.1; letter-spacing: -.05em; }
-.prometheus-faq-label { display: inline-flex; align-items: center; gap: 1.6rem; flex-shrink: 0; margin: 1.6rem 0 0; font-family: Manrope, Arial, sans-serif; font-size: 1.2rem; line-height: 1.5; }
-.prometheus-faq-label > span { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border: 1px solid #0909140d; border-radius: 50%; }
 .prometheus-faq-list { width: 80%; margin: 14.5rem 0 0 auto; }
 .prometheus-faq-item { padding: 0 0 3.2rem; border-bottom: 1px solid #0909141a; }
 .prometheus-faq-item + .prometheus-faq-item { margin-top: 4rem; }
@@ -62,8 +60,6 @@
   .prometheus-faq-container { width: calc(100% - 4rem); }
   .prometheus-faq-header { display: block; }
   .prometheus-faq-header h2 { font-size: clamp(4rem, 8.5vw, 6.4rem); letter-spacing: -.05em; }
-  .prometheus-faq-label { margin-top: 2.4rem; font-size: 1rem; gap: 1rem; }
-  .prometheus-faq-label > span { width: 2.8rem; height: 2.8rem; }
   .prometheus-faq-list { width: 100%; margin-top: 6.4rem; }
   .prometheus-faq-item { padding-bottom: 2.4rem; }
   .prometheus-faq-item + .prometheus-faq-item { margin-top: 2.4rem; }
@@ -204,7 +200,7 @@
 .prometheus-footer-social { background: none; }
 .prometheus-footer-social img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
-button.prometheus-footer-social { padding: 0; border: 0; cursor: pointer; flex-shrink: 0; transition: none; overflow: visible; }
+a.prometheus-footer-social { padding: 0; border: 0; cursor: pointer; flex-shrink: 0; transition: none; overflow: visible; }
 .prometheus-footer-social:focus-visible { outline: 2px solid #fff4ea; outline-offset: 5px; border-radius: 50%; }
 .prometheus-footer-social img { pointer-events: none; }
 
@@ -235,8 +231,8 @@ button.prometheus-footer-social { padding: 0; border: 0; cursor: pointer; flex-s
   .prometheus-footer-email > span:first-child { font-size: 2.8cqw; }
 }
 
-/* Folira email: top-aligned label, Geist Medium, 1.2 line-height, -4% tracking. */
-.prometheus-footer-top .prometheus-footer-email { align-items: flex-start; align-self: flex-start; gap: 20px; font-family: var(--font-geist-sans), sans-serif; font-size: clamp(24px, 1.8vw, 36px); line-height: 1.2; letter-spacing: -.04em; font-weight: 500; }
+/* Align the label and address on one text baseline at every viewport size. */
+.prometheus-footer-top .prometheus-footer-email { align-items: baseline; align-self: flex-start; gap: 20px; font-family: var(--font-geist-sans), sans-serif; font-size: clamp(24px, 1.8vw, 36px); line-height: 1.2; letter-spacing: -.04em; font-weight: 500; }
 .prometheus-footer-email > span:first-child { font-family: var(--font-geist-sans), sans-serif; font-size: 16px; line-height: 1.2; letter-spacing: -.02em; }
 @media (max-width: 600px) {
   .prometheus-footer-top .prometheus-footer-email { gap: 10px; font-size: clamp(16px, 4vw, 24px); }

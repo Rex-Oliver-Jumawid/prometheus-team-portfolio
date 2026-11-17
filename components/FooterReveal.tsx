@@ -15,6 +15,7 @@ export default function FooterReveal({ children }: { children: ReactNode }) {
     function update() {
       frame = undefined;
       if (!root || !(main instanceof HTMLElement)) return;
+      root.style.setProperty("--footer-stick-bottom", `${Math.min(0, window.innerHeight - root.offsetHeight)}px`);
       // Read the natural page edge: the sticky footer's own rectangle is pinned.
       const progress = Math.min(1, Math.max(0, (window.innerHeight - main.getBoundingClientRect().bottom) / Math.max(1, root.offsetHeight)));
       root.style.setProperty("--footer-reveal-offset", `${media.matches ? 0 : 40 * (1 - progress)}px`);

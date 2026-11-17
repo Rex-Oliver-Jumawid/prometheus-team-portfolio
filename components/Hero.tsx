@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import HeroVideo from "./HeroVideo";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { prometheusHero } from "../content/prometheusHero";
 
@@ -11,11 +12,12 @@ const pillArtwork = {
 export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prometheus" }) {
  let html = readFileSync(join(process.cwd(), "reference/hero.html"), "utf8");
  if (brand === "prometheus") {
+   html = html.replaceAll('href="https://arounda.agency/contact"', 'href="/contact"');
    let letterIndex = 0;
    const letterCount = prometheusHero.headline.reduce((count, part) => count + part.text.replace(/\s/g, "").length, 0);
    const revealText = (value: string) => value.split(/(\s+)/).map(word => /^\s+$/.test(word) ? word : `<span class="hero-reveal-word" aria-label="${escapeHtml(word)}">${Array.from(word).map(letter => `<span aria-hidden="true" class="hero-reveal-letter" style="--letter-delay:${(750 + 600 * letterIndex++ / Math.max(1, letterCount - 1)).toFixed(1)}ms">${escapeHtml(letter)}</span>`).join("")}</span>`).join("");
    const playMarkup = html.match(/<div class="home-hero-title-decor-play"[^>]*>[\s\S]*?<\/div>/)?.[0] ?? "";
-   const inlinePlay = playMarkup.replace(/^<div\b[^>]*>/, '<span class="home-hero-title-decor-play">').replace(/<\/div>$/, "</span>");
+   const inlinePlay = playMarkup.replace(/^<div\b[^>]*>/, '<button type="button" data-play-demo aria-label="Play our Furniture Odyssey demo" class="home-hero-title-decor-play prometheus-play-button">').replace(/<\/div>$/, "</button>");
    html = html.replace(/<h1 class="home-hero-subtitle">[\s\S]*?<\/h1>/,
      `<p class="home-hero-subtitle">${escapeHtml(prometheusHero.eyebrow)}</p>`);
    const headline = prometheusHero.headline.map(part => {
@@ -34,6 +36,9 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
    // pill owns its decorations, so line wrapping cannot detach them from a word.
    html = html.replace(/<div class="home-hero_icons-wrapper">[\s\S]*?(?=<div class="home-hero-title-decor-play")/, "");
    if (playMarkup) html = html.replace(playMarkup, "");
+   // The headline preview is hidden on phones, where it sits beside the CTA.
+   const mobilePlay = inlinePlay.replace('prometheus-play-button', 'prometheus-play-button prometheus-mobile-play');
+   html = html.replace(/(<div\b[^>]*class="home-hero_btn-wrapper"[^>]*>)/, `$1${mobilePlay}`);
    prometheusHero.paragraphs.forEach((text, index) => {
      html = html.replace(new RegExp(`<p class="home-hero-quote_text home-hero-quote_text-${index + 1}">[\\s\\S]*?<\\/p>`),
        `<p class="home-hero-quote_text home-hero-quote_text-${index + 1}">${escapeHtml(text).replace(/([,.]) /g, "$1&#8194;")}</p>`);
@@ -51,11 +56,19 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
        `<div class="prometheus-partner" role="img" aria-label="${name}" tabindex="0"><img src="/partners/${neutral}" alt="" aria-hidden="true" class="prometheus-partner-logo prometheus-partner-neutral" loading="eager" decoding="async"><img src="/partners/${file}" alt="" aria-hidden="true" class="prometheus-partner-logo prometheus-partner-color" loading="eager" decoding="async"></div>`
      ).join("")}</div>`
    );
-   html = html.replace("Partnering with enterprise platforms across global markets", "Trusted by our clients");
+   html = html.replace("Partnering with enterprise platforms across global markets", "Clients we've worked with");
    // Keep the headline, supporting text and CTA in their own full-height screen.
    html = html.replace('class="hero_main"', 'class="prometheus-hero-layout"');
    html = html.replace(/(<div class="prometheus-hero-layout"[^>]*>)/, '$1<div class="hero_main prometheus-hero-screen">');
    html = html.replace(/(<div id="[^"]*" class="home-hero_logos-wrapper")/, '</div>$1');
  }
- return <div dangerouslySetInnerHTML={{__html:html}} />;
+ const markup = <div dangerouslySetInnerHTML={{__html:html}} />;
+ if (brand !== "prometheus") return markup;
+ let videoSrc: string | null = null;
+ try {
+   const videos = readdirSync(join(process.cwd(), "public/videos")).filter(file => /\.(mp4|webm|ogv)$/i.test(file)).sort();
+   const video = videos.find(file => /furniture.*odyssey/i.test(file)) ?? videos[0];
+   if (video) videoSrc = `/videos/${encodeURIComponent(video)}`;
+ } catch { /* Show a fallback if the demo asset is unavailable. */ }
+ return <HeroVideo videoSrc={videoSrc}>{markup}</HeroVideo>;
 }

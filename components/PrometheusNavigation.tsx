@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
+import Link from "next/link";
 
 const links = [
   { label: "Services", href: "#services" },
@@ -61,6 +62,20 @@ export default function PrometheusNavigation() {
   }, [open]);
 
   const closeMenu = () => { setOpen(false); setServicesOpen(false); };
+  const goToContacts = (event: MouseEvent<HTMLAnchorElement>) => {
+    closeMenu();
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const footer = document.getElementById("contacts");
+    const main = footer?.previousElementSibling;
+    if (!(main instanceof HTMLElement)) return;
+    event.preventDefault();
+    // A sticky footer's rectangle is pinned behind the page, so its anchor
+    // cannot tell Lenis where the footer actually starts in document flow.
+    event.stopPropagation();
+    const top = window.scrollY + main.getBoundingClientRect().bottom;
+    const request = new window.CustomEvent("prometheus:scroll-to", { detail: { top, behavior: "smooth" }, cancelable: true });
+    if (window.dispatchEvent(request)) window.scrollTo({ top, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  };
 
   return (
     <nav ref={navigation} aria-label="Main navigation" className="navbar prometheus-navbar" style={{ transform: `translateY(-${open ? 0 : footerProgress * 110}%)` }} inert={footerProgress >= 1 && !open} data-scrolled={scrolled} data-menu-open={open} onKeyDown={event => {
@@ -71,7 +86,7 @@ export default function PrometheusNavigation() {
     }}>
       <div className="container is-relative w-container">
         <div className="navbar_main prometheus-nav-inner">
-          <a href="/prometheus" aria-label="Prometheus home" className="navbar_logo-wrapper w-inline-block"><span className="prometheus-wordmark">prometheus</span></a>
+          <Link href="/" aria-label="Prometheus home" className="navbar_logo-wrapper w-inline-block"><span className="prometheus-wordmark">prometheus</span></Link>
           <div className="prometheus-nav-menu-shell" data-open={open}>
           <div id="prometheus-menu" ref={menu} className="prometheus-nav-links" data-open={open} inert={mobile && !open} data-lenis-prevent="">
             {links.map(link => <div className={`prometheus-nav-item${link.label === "Services" ? " is-services" : ""}`} key={link.label}>
@@ -89,7 +104,7 @@ export default function PrometheusNavigation() {
             </div>)}
           </div>
           </div>
-          <a href="#contacts" onClick={closeMenu} className="button-cta nav-cta w-inline-block">
+          <a href="#contacts" onClick={goToContacts} className="button-cta nav-cta w-inline-block">
             <span className="button_text">Contacts</span>
             <span className="button_arrow-wrapper-2"><span className="code-embed navbar_button-arrow w-embed"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 7H12M12 7L6.5 1.5M12 7L6.5 12.5" stroke="currentColor" strokeWidth="1.8" /></svg></span></span>
           </a>

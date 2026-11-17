@@ -16,7 +16,9 @@ export default function TeamReveal({ children }: { children: ReactNode }) {
     function paint() {
       frame = undefined;
       if (!root || !panel) return;
-      const distance = window.innerHeight;
+      // Match the scroll travel to the rendered cover, including its compact phone layout.
+      const cover = root.querySelector<HTMLElement>(".team-cover-face");
+      const distance = cover?.getBoundingClientRect().height || window.innerHeight;
       root.style.setProperty("--team-height", `${panel.offsetHeight}px`);
       root.style.setProperty("--team-distance", `${distance}px`);
       // Hold briefly at either end, then slide both halves completely offscreen.

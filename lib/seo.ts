@@ -15,8 +15,8 @@ export const homepageUrl = publicHomepage();
 export const seoTitle = "Prometheus | Websites & Business Systems Philippines";
 export const seoDescription = "Custom websites, CRM and business management systems for Philippine small businesses, freelancers and professionals. Explore one-time pricing and our work.";
 const shareImage = homepageUrl
-  ? new URL("/prometheus/opengraph-image", homepageUrl).href
-  : undefined;
+  ? new URL("/opengraph-image", homepageUrl).href
+  : "/opengraph-image";
 
 export const homepageMetadata: Metadata = {
   title: seoTitle,
@@ -30,6 +30,7 @@ export const homepageMetadata: Metadata = {
   openGraph: {
     type: "website", siteName: "Prometheus", locale: "en_PH",
     title: seoTitle, description: seoDescription,
+    images: [{ url: shareImage, width: 1200, height: 630, alt: "Prometheus — Websites and business systems for the Philippines" }],
     ...(homepageUrl ? { url: homepageUrl.href } : {}),
   },
   twitter: {

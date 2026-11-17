@@ -1,5 +1,7 @@
 "use client";
 
+import { contact } from "../content/contact";
+
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { pricingPlans, personalPlans, customPlans } from "../content/pricing";
 import PricingSelector from "./PricingSelector";
@@ -19,7 +21,7 @@ function PlanCards({ audience }: { audience: Audience }) {
                 {plan.unit && <span className="pricing-plan-unit">{plan.unit}</span>}
               </p>
               <p className="pricing-plan-description">{plan.description}</p>
-              <a className="pricing-plan-action" href="#contacts" aria-label={`${plan.action}: ${plan.name} plan`}>{plan.action}</a>
+              <a className="pricing-plan-action" href={contact.meetingUrl} target="_blank" rel="noopener noreferrer" aria-label={`${plan.action}: ${plan.name} plan`}>{plan.action}</a>
               <div className="pricing-plan-included">
                 <p>What’s Included</p>
                 <div className="pricing-build-first">We build it first for free, no payment.</div>

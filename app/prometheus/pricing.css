@@ -234,3 +234,25 @@
 @keyframes pricing-panel-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 767px) { .pricing-plans[data-plan-count] { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .pricing-panel-in { animation: none; } .pricing-panel-out { display: none; } }
+
+/* Continue the showcase backdrop while pricing expands into view. */
+.pricing-reveal-backdrop { background: #080909; }
+/* Folira-inspired expanding ellipse. Default/SSR content remains fully visible. */
+@supports (mask-image: radial-gradient(black, transparent)) {
+  .prometheus-pricing[data-animated="true"][data-reveal-complete="false"] {
+    -webkit-mask-image: radial-gradient(ellipse closest-side, #000 99.7%, transparent 100%);
+    mask-image: radial-gradient(ellipse closest-side, #000 99.7%, transparent 100%);
+    -webkit-mask-size: var(--pricing-mask-width) var(--pricing-mask-height);
+    mask-size: var(--pricing-mask-width) var(--pricing-mask-height);
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  .prometheus-pricing[data-animated="true"] > .pricing-container { transform: scale(var(--pricing-content-scale, 1)); transform-origin: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prometheus-pricing { -webkit-mask-image: none !important; mask-image: none !important; }
+  .prometheus-pricing > .pricing-container { transform: none !important; }
+}
+
