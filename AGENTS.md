@@ -1,3 +1,8 @@
+## Verification
+
+- Before verifying user-facing changes or investigating browser behavior, read [.cursor/skills/verify-prometheus/SKILL.md](.cursor/skills/verify-prometheus/SKILL.md) and its feature index. Run the affected journeys and the checks required there before reporting success.
+- When routes, controls, content, assets, startup, or tooling change, update the affected verification recipes and helper in the same task. Rerun changed recipes; report blocked or untested paths explicitly. Use `/maintain-verification-skill` for a full map audit when requested.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know
