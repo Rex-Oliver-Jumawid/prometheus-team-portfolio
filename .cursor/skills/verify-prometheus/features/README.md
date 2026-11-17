@@ -4,7 +4,7 @@ The portfolio is served at `/`; `/prometheus` permanently redirects there. Start
 
 | Feature | Helper journey | Coverage |
 | --- | --- | --- |
-| [Client logos](clients.md) | `clients` | Four logos, current heading, RefillHub and ABG Studios hover and keyboard reveal, image loading and viewport overflow |
+| [Client logos](clients.md) | `clients` | Three logos, current heading, ABG Studios hover and keyboard reveal, image loading and viewport overflow |
 | [Navigation and services](navigation-services.md) | `navigation` | Desktop Services link; mobile menu, Escape, services submenu; Landing Pages disclosure |
 | [Cases and concept gallery](work-showcase.md) | `work` | Two cases, keyboard concept selection, Enter preview, Escape dismissal |
 | [Pricing](pricing.md) | `pricing` | Default Business, Personal click, Custom via End, CTA calendar destination |
