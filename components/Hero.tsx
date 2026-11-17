@@ -50,6 +50,7 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
      { file: "furniture-odyssey-original.png", neutral: "furniture_odyssey_fff4ea.png", name: "Furniture Odyssey" },
      { file: "piercing-corner-original.png", neutral: "piercing_corner_fff4ea.png", name: "Piercing Corner" },
      { file: "refillhub-original.png", neutral: "refillhub-neutral.png", name: "RefillHub Sibuyan" },
+     { file: "abg-studios-original.png", neutral: "abg-studios-neutral.png", name: "ABG Studios" },
    ];
    html = html.replace(
      /<div class="trusted_logos">[\s\S]*?<\/div>/,

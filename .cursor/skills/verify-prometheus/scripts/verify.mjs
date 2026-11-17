@@ -49,7 +49,7 @@ async function clients() {
   const row = page.locator(".prometheus-partners");
   await row.scrollIntoViewIfNeeded();
   await expect(page.getByText("Clients we're working with", { exact: true })).toBeVisible();
-  await expect(row.getByRole("img")).toHaveCount(3);
+  await expect(row.getByRole("img")).toHaveCount(4);
   const logo = row.getByRole("img", { name: "RefillHub Sibuyan", exact: true });
   const neutral = logo.locator(".prometheus-partner-neutral");
   const color = logo.locator(".prometheus-partner-color");
@@ -57,7 +57,7 @@ async function clients() {
     await expect.poll(() => image.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   }
   await expect(neutral).toHaveCSS("opacity", "1");
-  await capture("Three client logos in neutral state");
+  await capture("Four client logos in neutral state");
   await logo.hover();
   await expect(neutral).toHaveCSS("opacity", "0");
   await expect(color).toHaveCSS("clip-path", "circle(75% at 50% 50%)");
@@ -69,6 +69,20 @@ async function clients() {
   await expect(logo).toBeFocused();
   await expect(neutral).toHaveCSS("opacity", "0");
   await capture("Keyboard focus reveals blue RefillHub artwork");
+  await page.keyboard.press("Tab");
+  const abg = row.getByRole("img", { name: "ABG Studios", exact: true });
+  await expect(abg).toBeFocused();
+  await expect(abg.locator(".prometheus-partner-neutral")).toHaveCSS("opacity", "0");
+  await expect(abg.locator(".prometheus-partner-color")).toHaveCSS("clip-path", "circle(75% at 50% 50%)");
+  await capture("Keyboard focus reveals metallic ABG Studios artwork");
+  await page.keyboard.press("Tab");
+  await expect(abg.locator(".prometheus-partner-neutral")).toHaveCSS("opacity", "1");
+  await abg.hover();
+  await expect(abg.locator(".prometheus-partner-neutral")).toHaveCSS("opacity", "0");
+  await expect(abg.locator(".prometheus-partner-color")).toHaveCSS("clip-path", "circle(75% at 50% 50%)");
+  await capture("Hover reveals metallic ABG Studios artwork");
+  await page.mouse.move(0, 0);
+  await expect(abg.locator(".prometheus-partner-neutral")).toHaveCSS("opacity", "1");
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
 }
 
