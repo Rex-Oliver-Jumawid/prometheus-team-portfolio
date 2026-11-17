@@ -57,7 +57,7 @@ async function clients() {
     await expect.poll(() => image.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   }
   await expect(neutral).toHaveCSS("opacity", "1");
-  await capture("Three client logos with cream ABG Studios portrait");
+  await capture("Three client logos with centered cream ABG Studios portrait");
   await logo.hover();
   await expect(neutral).toHaveCSS("opacity", "0");
   await expect(color).toHaveCSS("clip-path", "circle(75% at 50% 50%)");
