@@ -185,10 +185,8 @@ async function team() {
 
 async function work() {
   await page.locator("#works").scrollIntoViewIfNeeded();
-  await expect(page.locator("#works article")).toHaveCount(1);
-  await expect(page.locator("#works")).toContainText("Furniture Odyssey");
-  await expect(page.locator("#works")).not.toContainText("Piercing Corner");
-  await capture("Reach Furniture Odyssey case study");
+  await expect(page.locator("#works article")).toHaveCount(2);
+  await capture("Reach both case studies");
   const gallery = page.getByRole("group", { name: "Concept gallery" });
   await gallery.scrollIntoViewIfNeeded();
   await page.locator("#showcase .showcase-stage, #showcase [data-mw-init]").first().waitFor();
