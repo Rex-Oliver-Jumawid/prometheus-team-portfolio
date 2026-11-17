@@ -16,7 +16,7 @@ Scroll past the team or open `/#faq`. Reach `#contacts` from Main navigation's C
 
 Preconditions: current build; run `faq`; use `--mobile` and `--reduced-motion` after relevant layout/motion changes.
 
-- Automated: click summary `Is it really free to get started?`; expect its details open and answer visible, then capture. Click `What if I don't like what you've built?`; expect both answers open. Press Enter on the first summary; expect only the second still open.
+- Automated: click summary `Is it really free to get started?`; expect its details open and answer visible, assert Student requires 50% after scope agreement, then capture. Click `What if I don't like what you've built?`; expect both answers open. Press Enter on the first summary; expect only the second still open.
 - Automated: focus the final FAQ summary and press Tab; expect the `Email prometheus.exps@gmail.com` link focused and in the viewport, with `mailto:prometheus.exps@gmail.com`. Capture the visible focus/revealed footer.
 - Extended answers: operate all seven summaries with Enter/Space, reverse an expansion rapidly, and toggle motion preference mid-animation. In a JavaScript-disabled context confirm the native summaries still open.
 - Extended footer: Tab through all footer links from FAQ; confirm each focused link remains visible. Compare the actual booking `href` with `content/contact.ts` without submitting a meeting. Test all four local navigation links, plus direct `#contacts` and Pricing/Contacts entry points.

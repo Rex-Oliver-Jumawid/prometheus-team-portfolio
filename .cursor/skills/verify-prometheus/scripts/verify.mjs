@@ -97,25 +97,57 @@ async function navigation() {
 }
 
 async function pricing() {
+  await expect(page.locator("#pricing .pricing-build-first")).toHaveCount(0);
   const selector = page.getByRole("radiogroup", { name: "Pricing options" });
   await selector.scrollIntoViewIfNeeded();
-  await expect(page.getByRole("region", { name: "Business pricing", exact: true }).getByRole("article")).toHaveCount(3);
-  await capture("Business pricing baseline");
+  const business = page.getByRole("region", { name: "Business pricing", exact: true });
+  await expect(business.getByRole("article")).toHaveCount(2);
+  await expect(business).toContainText("₱14,999");
+  const alignment = await business.locator(".pricing-plans").evaluate(el => ({ panel: el.getBoundingClientRect().left, container: el.closest(".pricing-container").getBoundingClientRect().left }));
+  assert.ok(Math.abs(alignment.panel - alignment.container) < 2);
+  await capture("Business prototype offer");
+  await expect(business.locator("details")).toHaveCount(0);
+  await expect(business.getByRole("article", { name: "Custom Business System" })).toHaveClass(/pricing-plan-featured/);
+  const maintenance = business.getByRole("article", { name: "Maintenance & Warranty" });
+  for (const type of ["Corrective", "Perfective", "Adaptive", "Preventive"]) await expect(maintenance).toContainText(`${type} maintenance`);
+  await expect(business).toContainText("50% before development");
+  await maintenance.scrollIntoViewIfNeeded();
+  await capture("Business maintenance panel");
   await selector.getByRole("radio", { name: "Personal", exact: true }).click();
   const personal = page.getByRole("region", { name: "Personal pricing", exact: true });
   await expect(personal.getByRole("article")).toHaveCount(2);
   await expect(personal).toContainText("₱2,499");
-  await capture("Select Personal pricing");
+  await expect(personal).toContainText("₱4,999");
+  await capture("Personal portfolios");
+  await personal.locator("summary").click();
+  assert.ok(await personal.locator("details p").evaluateAll(elements => elements.every(el => Math.abs(el.getBoundingClientRect().width - el.parentElement.clientWidth) < 2)));
+  await expect(personal.locator("details[open]")).toContainText("₱500/year");
+  await expect(personal.locator("details[open]")).toContainText("promths.com");
+  await capture("Personal hosting renewal terms");
+  await selector.getByRole("radio", { name: "Personal", exact: true }).press("ArrowRight");
+  const student = page.getByRole("region", { name: "Student pricing", exact: true });
+  await expect(selector.getByRole("radio", { name: "Student", exact: true })).toBeFocused();
+  await expect(student.getByRole("article")).toHaveCount(3);
+  await expect(student).toContainText("₱8,999");
+  await expect(student).toContainText("₱10,999");
+  await capture("Student project options");
+  await student.locator("summary").click();
+  assert.ok(await student.locator("details p").evaluateAll(elements => elements.every(el => Math.abs(el.getBoundingClientRect().width - el.parentElement.clientWidth) < 2)));
+  await expect(student.locator("details[open]")).toContainText("Google Forms");
+  await capture("Student evaluation responsibilities");
+  for (const audience of ["Personal", "Student", "Business"]) {
+    await selector.getByRole("radio", { name: audience, exact: true }).click();
+    const region = page.getByRole("region", { name: `${audience} pricing`, exact: true });
+    for (const link of await region.getByRole("link").all()) {
+      await expect(link).toHaveAttribute("href", "https://cal.com/rex-oliver-jumawid-mmz8ct/project-consultation");
+      await expect(link).toHaveAttribute("target", "_blank");
+    }
+  }
+  await selector.getByRole("radio", { name: "Business", exact: true }).press("Home");
+  await expect(selector.getByRole("radio", { name: "Personal", exact: true })).toHaveAttribute("aria-checked", "true");
   await selector.getByRole("radio", { name: "Personal", exact: true }).press("End");
-  await expect(selector.getByRole("radio", { name: "Custom", exact: true })).toHaveAttribute("aria-checked", "true");
-  const custom = page.getByRole("region", { name: "Custom pricing", exact: true });
-  await expect(custom.getByRole("article")).toHaveCount(1);
-  await expect(custom).toContainText("Custom pricing");
-  await capture("Use End key to select Custom pricing");
-  const booking = custom.getByRole("link", { name: "Discuss your project: Custom Solution plan", exact: true });
-  await expect(booking).toHaveAttribute("href", "https://cal.com/rex-oliver-jumawid-mmz8ct/project-consultation");
-  await expect(booking).toHaveAttribute("target", "_blank");
-  await capture("Custom pricing CTA links to shared consultation calendar");
+  await expect(selector.getByRole("radio", { name: "Business", exact: true })).toHaveAttribute("aria-checked", "true");
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
 }
 
 async function faq() {
@@ -124,6 +156,7 @@ async function faq() {
   await first.locator("summary").click();
   await expect(first).toHaveAttribute("open", "");
   await expect(first.locator("p")).toBeVisible();
+  await expect(first).toContainText("Student work requires a 50% payment");
   await capture("Open free-start answer");
   await second.locator("summary").click();
   await expect(first).toHaveAttribute("open", "");
@@ -152,8 +185,10 @@ async function team() {
 
 async function work() {
   await page.locator("#works").scrollIntoViewIfNeeded();
-  await expect(page.locator("#works article")).toHaveCount(2);
-  await capture("Reach both case studies");
+  await expect(page.locator("#works article")).toHaveCount(1);
+  await expect(page.locator("#works")).toContainText("Furniture Odyssey");
+  await expect(page.locator("#works")).not.toContainText("Piercing Corner");
+  await capture("Reach Furniture Odyssey case study");
   const gallery = page.getByRole("group", { name: "Concept gallery" });
   await gallery.scrollIntoViewIfNeeded();
   await page.locator("#showcase .showcase-stage, #showcase [data-mw-init]").first().waitFor();

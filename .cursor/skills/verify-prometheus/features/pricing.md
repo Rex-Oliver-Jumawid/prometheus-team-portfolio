@@ -1,29 +1,13 @@
 # Pricing
 
-Visitors compare Business, Personal and Custom offers, then open the shared consultation calendar through a plan action.
+Personal, Student and Business radios select an accessible pricing region. Business is the default. Promotional banners are omitted; preview and payment terms remain in the single collapsed disclosure inside each pricing panel. Personal has two portfolios (from ₱2,499 / ₱4,999), Student has consultation plus development (from ₱8,999) and development/documentation/consultation (from ₱10,999), and Business has a custom-system offer (from ₱14,999) in the white featured panel on the left and a maintenance panel on the right, stacked on phones.
 
-## Sub-features
+Run `pricing`, `pricing --mobile`, and `pricing --reduced-motion` with the verification helper after a fresh build. It checks all card counts and prices, Personal hosting renewal and promths.com, Student evaluation responsibilities, Business process/payment/maintenance disclosures, keyboard ArrowRight/Home/End selection, all consultation link destinations, and horizontal overflow. Inspect screenshots for legibility, wrapping, and disclosure layout.
 
-- `audience`: One selected pricing radio and corresponding accessible region.
-- `plans`: Business has three plans, Personal two, Custom one; prices and inclusions follow current content.
-- `contact`: Each plan action links to the shared consultation calendar in a new tab.
+Enter through `/#pricing` or either navigation Pricing link. Expand “Payment, warranty & maintenance” inside the pricing panel. There is no standalone terms section or separate terms heading. Business has a free prototype with one iteration, staged 50/30/20 payments, and three-month corrective warranty. Personal has a preview with one iteration, 50/50 payments, first-year hosting/subdomain, ₱500 annual subdomain renewal, and 30-day warranty. Student has 50/50 payments, bounded revisions, and student-provided surveys/evaluations; development packages have a 30-day warranty. Compare exact inclusions against content/pricing.ts.
 
-## How to get to it (user POV)
+Outgoing animation panels are inert and aria-hidden; scope assertions to the active region. Calendar verification checks href only and does not submit bookings. Extended checks: rapid switching while resizing, direct fragment and both navigation entry points.
 
-Click Pricing in Main navigation or Footer navigation, or open `/#pricing`. Use Personal, Business and Custom in Pricing options, then a plan's contact action.
+Business uses two panels without a terms disclosure; prototype and payment terms are in the development panel and the four maintenance types are in the maintenance panel. Native terms expand and collapse with an intrinsic-height CSS transition where supported; other browsers retain native disclosure behavior. Reduced motion disables transitions. Verify open/close and rapid reversal with keyboard and inspect the settled layout.
 
-## Driving it with Playwright
-
-Preconditions: current build; run `pricing`; repeat with `--mobile` after responsive changes and `--reduced-motion` after motion changes.
-
-- Automated: expect three articles in `getByRole('region', {name: 'Business pricing', exact: true})`; capture the default state.
-- Automated: click radio `Personal`, expect two articles and `₱2,499` in Personal pricing; capture the changed plans.
-- Automated: press End on the Personal radio; expect Custom checked, one article in Custom pricing and `Custom pricing` text. Check `Discuss your project: Custom Solution plan` against the shared consultation URL and expect `target="_blank"`, without submitting a booking.
-- Extended: ArrowLeft/ArrowRight and Home navigate the radios with matching focus and checked state. Switch rapidly while resizing; inspect settled height, absence of clipped features, and no exposed outgoing duplicate plans. Check calendar destinations for Business and Personal as well as Custom.
-- Extended entry points: repeat through both navigation links and the direct fragment. Compare displayed prices/inclusions against `content/pricing.ts` after intentional copy changes.
-
-## Gotchas
-
-- Outgoing cards remain temporarily in an inert, aria-hidden animation panel. Scope assertions to the named active region.
-- Current Business offers use peso prices, not the historical dollar plans in README/HANDOVER.
-- Checking the booking link proves its configured destination; it does not prove calendar availability or submit a booking.
+Personal and Student disclosure paragraphs use the full available panel width, matching Business terms within their cards. The helper checks paragraph widths in both disclosures at desktop and mobile sizes.

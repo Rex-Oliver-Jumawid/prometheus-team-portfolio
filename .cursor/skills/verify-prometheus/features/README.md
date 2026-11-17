@@ -7,7 +7,7 @@ The portfolio is served at `/`; `/prometheus` permanently redirects there. Start
 | [Client logos](clients.md) | `clients` | Three logos, current heading, ABG Studios hover and keyboard reveal, image loading and viewport overflow |
 | [Navigation and services](navigation-services.md) | `navigation` | Desktop Services link; mobile menu, Escape, services submenu; Landing Pages disclosure |
 | [Cases and concept gallery](work-showcase.md) | `work` | Two cases, keyboard concept selection, Enter preview, Escape dismissal |
-| [Pricing](pricing.md) | `pricing` | Default Business, Personal click, Custom via End, CTA calendar destination |
+| [Pricing](pricing.md) | `pricing` | Personal/Student/Business offers, keyboard selection, terms, maintenance and calendar destinations |
 | [Team](team.md) | `team` | Reach team heading and three profiles |
 | [FAQ and contact](faq-contact.md) | `faq` | Independent FAQ answers, keyboard close, Tab into visible contact email |
 

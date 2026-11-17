@@ -1,3 +1,7 @@
+## Saved versions
+
+- When the user asks for the saved version with Piercing Corner in case studies, follow [documentation/agents.md](documentation/agents.md).
+
 ## Verification
 
 - Before verifying user-facing changes or investigating browser behavior, read [.cursor/skills/verify-prometheus/SKILL.md](.cursor/skills/verify-prometheus/SKILL.md) and its feature index. Run the affected journeys and the checks required there before reporting success.

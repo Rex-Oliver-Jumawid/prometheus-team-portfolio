@@ -3,16 +3,18 @@
 import { contact } from "../content/contact";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { pricingPlans, personalPlans, customPlans } from "../content/pricing";
+import { businessPlans, personalPlans, studentPlans, pricingTerms } from "../content/pricing";
 import PricingSelector from "./PricingSelector";
 
-const groups = { personal: personalPlans, business: pricingPlans, custom: customPlans };
+const groups = { personal: personalPlans, student: studentPlans, business: businessPlans };
 type Audience = keyof typeof groups;
-const options = [{value:"personal",label:"Personal"},{value:"business",label:"Business"},{value:"custom",label:"Custom"}];
+const options = [{value:"personal",label:"Personal"},{value:"student",label:"Student"},{value:"business",label:"Business"}];
 function PlanCards({ audience }: { audience: Audience }) {
  const plans = groups[audience];
  return (
-        <div className="pricing-plans" data-plan-count={plans.length}>
+        <>
+        {audience === "student" && <h3 className="pricing-audience-title">{pricingTerms.student.title}</h3>}
+        <div className="pricing-plans" data-plan-count={audience === "business" ? 2 : plans.length}>
           {plans.map(plan => (
             <article key={plan.id} className={`pricing-plan${plan.featured ? " pricing-plan-featured" : ""}`} aria-labelledby={`pricing-${audience}-${plan.id}-title`}>
               <h3 id={`pricing-${audience}-${plan.id}-title`} className="pricing-plan-name">{plan.name}</h3>
@@ -24,7 +26,6 @@ function PlanCards({ audience }: { audience: Audience }) {
               <a className="pricing-plan-action" href={contact.meetingUrl} target="_blank" rel="noopener noreferrer" aria-label={`${plan.action}: ${plan.name} plan`}>{plan.action}</a>
               <div className="pricing-plan-included">
                 <p>What’s Included</p>
-                <div className="pricing-build-first">We build it first for free, no payment.</div>
                 <ul>
                   {plan.features.map((feature, featureIndex) => (
                     <li key={feature}>
@@ -33,10 +34,22 @@ function PlanCards({ audience }: { audience: Audience }) {
                     </li>
                   ))}
                 </ul>
+                {audience === "business" && <div className="pricing-business-copy">{pricingTerms.business.sections.slice(0, 3).map(section => <p key={section.title}><strong>{section.title}.</strong> {section.text}</p>)}</div>}
               </div>
             </article>
           ))}
+          {audience === "business" ? <article className="pricing-plan" aria-labelledby="pricing-maintenance-title">
+            <h3 id="pricing-maintenance-title" className="pricing-plan-name">Maintenance &amp; Warranty</h3>
+            <p className="pricing-plan-price"><span>Quoted separately</span></p>
+            <p className="pricing-plan-description">Three months of corrective maintenance are included from launch. Ongoing maintenance is priced by type and scope, with fees agreed before work begins.</p>
+            <a className="pricing-plan-action" href={contact.meetingUrl} target="_blank" rel="noopener noreferrer">Discuss maintenance</a>
+            <div className="pricing-plan-included pricing-business-copy">{pricingTerms.business.sections.slice(3).map(section => <p key={section.title}><strong>{section.title}.</strong> {section.text}</p>)}</div>
+          </article> : <details className="pricing-terms">
+            <summary>Payment, warranty &amp; maintenance</summary>
+            {pricingTerms[audience].sections.map(section => <p key={section.title}><strong>{section.title}.</strong> {section.text}</p>)}
+          </details>}
         </div>
+        </>
  );
 }
 
@@ -65,7 +78,7 @@ export default function PricingPlans() {
   return () => heightAnimation.current?.cancel();
  }, [audience]);
  return <>
-  <PricingSelector options={options} value={audience} onChange={value => {setPrevious(audience);setAudience(value as Audience);}} />
+  <PricingSelector options={options} value={audience} onChange={value => {setPrevious(audience);if (value === "personal" || value === "student" || value === "business") setAudience(value);}} />
   <div ref={shell} className="pricing-panels">
    {previous && <div key={`out-${previous}`} className="pricing-panel-out" aria-hidden="true" inert><PlanCards audience={previous} /></div>}
    <div ref={panel} key={audience} className={previous ? "pricing-panel-in" : undefined} role="region" aria-label={`${options.find(option => option.value === audience)?.label} pricing`}><PlanCards audience={audience} /></div>
