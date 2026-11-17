@@ -47,7 +47,7 @@ If launch fails, inspect the run's `server.log` and `report.json` before retryin
 
 ## Drive
 
-The executable helper [scripts/verify.mjs](scripts/verify.mjs) accepts `navigation`, `work`, `pricing`, `team`, or `faq`. Each run starts at `/` with fresh browser state. Add `--mobile` for 390×844 (default 1440×1000), and `--reduced-motion` for reduced-motion coverage:
+The executable helper [scripts/verify.mjs](scripts/verify.mjs) accepts `clients`, `navigation`, `work`, `pricing`, `team`, or `faq`. Each run starts at `/` with fresh browser state. Add `--mobile` for 390×844 (default 1440×1000), and `--reduced-motion` for reduced-motion coverage:
 
 ```bash
 node .cursor/skills/verify-prometheus/scripts/verify.mjs navigation --mobile

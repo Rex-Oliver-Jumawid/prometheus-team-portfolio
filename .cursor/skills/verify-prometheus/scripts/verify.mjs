@@ -9,9 +9,9 @@ import { chromium, expect } from "playwright/test";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const [feature, ...flags] = process.argv.slice(2);
-const journeys = { navigation, work, pricing, team, faq };
+const journeys = { clients, navigation, work, pricing, team, faq };
 if (!Object.hasOwn(journeys, feature) || flags.some(flag => !["--mobile", "--reduced-motion"].includes(flag))) {
-  console.error("Usage: node .cursor/skills/verify-prometheus/scripts/verify.mjs <navigation|work|pricing|team|faq> [--mobile] [--reduced-motion]");
+  console.error("Usage: node .cursor/skills/verify-prometheus/scripts/verify.mjs <clients|navigation|work|pricing|team|faq> [--mobile] [--reduced-motion]");
   process.exit(1);
 }
 const viewport = flags.includes("--mobile") ? { width: 390, height: 844 } : { width: 1440, height: 1000 };
@@ -43,6 +43,33 @@ async function doctor(base) {
   assert.equal(response.status, 200);
   assert.match(await response.text(), /Prometheus \| Websites &amp; Business Systems Philippines/);
   await writeFile(join(evidence, "doctor.json"), JSON.stringify({ base, pid: server.pid, buildId, status: response.status }, null, 2));
+}
+
+async function clients() {
+  const row = page.locator(".prometheus-partners");
+  await row.scrollIntoViewIfNeeded();
+  await expect(page.getByText("Clients we're working with", { exact: true })).toBeVisible();
+  await expect(row.getByRole("img")).toHaveCount(3);
+  const logo = row.getByRole("img", { name: "RefillHub Sibuyan", exact: true });
+  const neutral = logo.locator(".prometheus-partner-neutral");
+  const color = logo.locator(".prometheus-partner-color");
+  for (const image of await row.locator("img").all()) {
+    await expect.poll(() => image.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+  }
+  await expect(neutral).toHaveCSS("opacity", "1");
+  await capture("Three client logos in neutral state");
+  await logo.hover();
+  await expect(neutral).toHaveCSS("opacity", "0");
+  await expect(color).toHaveCSS("clip-path", "circle(75% at 50% 50%)");
+  await capture("Hover reveals blue RefillHub artwork");
+  await page.mouse.move(0, 0);
+  await expect(neutral).toHaveCSS("opacity", "1");
+  await row.getByRole("img", { name: "Piercing Corner", exact: true }).focus();
+  await page.keyboard.press("Tab");
+  await expect(logo).toBeFocused();
+  await expect(neutral).toHaveCSS("opacity", "0");
+  await capture("Keyboard focus reveals blue RefillHub artwork");
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
 }
 
 async function navigation() {

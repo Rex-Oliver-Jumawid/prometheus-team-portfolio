@@ -49,6 +49,7 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
    const partners = [
      { file: "furniture-odyssey-original.png", neutral: "furniture_odyssey_fff4ea.png", name: "Furniture Odyssey" },
      { file: "piercing-corner-original.png", neutral: "piercing_corner_fff4ea.png", name: "Piercing Corner" },
+     { file: "refillhub-original.png", neutral: "refillhub-neutral.png", name: "RefillHub Sibuyan" },
    ];
    html = html.replace(
      /<div class="trusted_logos">[\s\S]*?<\/div>/,
@@ -56,7 +57,7 @@ export default function Hero({ brand = "arounda" }: { brand?: "arounda" | "prome
        `<div class="prometheus-partner" role="img" aria-label="${name}" tabindex="0"><img src="/partners/${neutral}" alt="" aria-hidden="true" class="prometheus-partner-logo prometheus-partner-neutral" loading="eager" decoding="async"><img src="/partners/${file}" alt="" aria-hidden="true" class="prometheus-partner-logo prometheus-partner-color" loading="eager" decoding="async"></div>`
      ).join("")}</div>`
    );
-   html = html.replace("Partnering with enterprise platforms across global markets", "Clients we've worked with");
+   html = html.replace("Partnering with enterprise platforms across global markets", "Clients we're working with");
    // Keep the headline, supporting text and CTA in their own full-height screen.
    html = html.replace('class="hero_main"', 'class="prometheus-hero-layout"');
    html = html.replace(/(<div class="prometheus-hero-layout"[^>]*>)/, '$1<div class="hero_main prometheus-hero-screen">');

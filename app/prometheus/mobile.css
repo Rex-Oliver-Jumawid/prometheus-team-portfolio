@@ -17,7 +17,7 @@
   .prometheus-preview .home-hero_btn-wrapper { margin: 0; }
   .prometheus-preview .home-hero_logos-wrapper { padding-block: 24px 56px; }
   .prometheus-preview .trusted_wrapper { padding-block: 16px; }
-  .prometheus-preview .prometheus-partners { gap: 24px; }
+  .prometheus-preview .prometheus-partners { grid-template-columns: minmax(0, 28rem); gap: 24px; }
   .prometheus-preview .prometheus-partner { height: 100px; }
   .prometheus-preview .prometheus-services > .home-container,
   .prometheus-preview .prometheus-cases > .home-container { width: calc(100% - 32px); padding-inline: 0; margin-inline: auto; }
